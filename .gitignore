@@ -1,0 +1,4 @@
+build/*
+.swish/
+!build/SwiftestCore
+!build/SwiftestClient

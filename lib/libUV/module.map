@@ -1,0 +1,4 @@
+module libUV [system] {
+  header "/usr/local/include/uv.h"
+  link "uv"
+}
