@@ -15,6 +15,10 @@ public class Loop {
 
   public init(_ pointer: Pointer) {
     self.pointer = pointer
-    self.status = .OK
+    self.status = Status(uv_loop_init(self.pointer))
+  }
+
+  public func run(runMode: RunMode) -> Status {
+    return Status(uv_run(self.pointer, runMode.value))
   }
 }

@@ -19,4 +19,11 @@ describe("Loop") {
       expect(loop.status).to.equal(.OK)
     }
   }
+
+  describe("run") {
+    it("sucessfully runs the loop") {
+      let loop = Loop()
+      expect(loop.run(.Default)).to.equal(.OK)
+    }
+  }
 }
