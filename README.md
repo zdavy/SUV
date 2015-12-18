@@ -1,6 +1,7 @@
 ## SUV
 
-_depends on libuv version 1.7.5r1_
+_ depends on libuv version [1.8.0-r1](https://github.com/libuv/libuv/commit/5467299450ecf61635657557b6e01aaaf6c3fdf4) _
+_ checkout to the `v1.8.0` tag and install according to the documentation _
 
 libUV bindings for swift. This is still very much a Work-In-Progress, meaning
 and a lot might (and very likely will) change. Stay tuned.
