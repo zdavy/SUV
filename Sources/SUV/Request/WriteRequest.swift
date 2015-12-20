@@ -1,11 +1,11 @@
 import libUV
 
 public class WriteRequest {
-  public typealias Pointer = UnsafeMutablePointer<UVWrite>
+  public typealias Pointer = UnsafeMutablePointer<UVWriteType>
   public let pointer: Pointer
 
   public init() {
-    self.pointer = UnsafeMutablePointer.alloc(sizeof(UVWrite))
+    self.pointer = UnsafeMutablePointer.alloc(sizeof(UVWriteType))
   }
 
   public init(_ pointer: Pointer) {

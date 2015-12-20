@@ -1,7 +1,7 @@
 import libUV
 
 public class Handle: HandleType {
-  public typealias Pointer = UnsafeMutablePointer<UVHandle>
+  public typealias Pointer = UnsafeMutablePointer<UVHandleType>
 
   public let pointer: Pointer
   public let loop: Loop

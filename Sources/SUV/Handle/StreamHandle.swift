@@ -1,7 +1,7 @@
 import libUV
 
 public class StreamHandle: HandleType {
-  public typealias Pointer = UnsafeMutablePointer<UVStream>
+  public typealias Pointer = UnsafeMutablePointer<UVStreamType>
 
   public let pointer: Pointer
   public let loop: Loop

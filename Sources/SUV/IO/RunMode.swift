@@ -3,7 +3,7 @@ public enum RunMode {
   case Once
   case NoWait
 
-  public var value: UVRunMode {
+  public var value: UVRunModeType {
     switch self {
       case Default: return UVRunDefault
       case Once: return UVRunOnce

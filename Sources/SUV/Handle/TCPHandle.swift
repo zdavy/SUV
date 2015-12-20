@@ -1,7 +1,7 @@
 import libUV
 
 public class TCPHandle: HandleType {
-  public typealias Pointer = UnsafeMutablePointer<UVTCP>
+  public typealias Pointer = UnsafeMutablePointer<UVTCPType>
 
   public let loop: Loop
   public let pointer: Pointer
@@ -9,7 +9,7 @@ public class TCPHandle: HandleType {
 
   public init(_ loop: Loop) {
     self.loop = loop
-    self.pointer = Pointer.alloc(sizeof(UVTCP))
+    self.pointer = Pointer.alloc(sizeof(UVTCPType))
 
     self.status = Status(uv_tcp_init(self.loop.pointer, self.pointer))
   }
