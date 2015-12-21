@@ -7,6 +7,7 @@ Swiftest.register([
     CastSpec.self,
     LoopSpec.self,
     RunModeSpec.self,
+    WriteRequestSpec.self,
     HandleEquatableSpec.self,
     StatusEquatableSpec.self,
     LoopEquatableSpec.self
