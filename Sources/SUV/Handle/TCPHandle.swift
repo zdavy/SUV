@@ -16,15 +16,15 @@ public class TCPHandle: HandleType {
     return Status(TCPBind(self.pointer, addr.pointer, inet.family))
   }
 
-  public func connect(addr: Addr, callback: (ConnectionRequest, Status) -> Void) -> Status {
-    let connectionRequest = ConnectionRequest()
-    connectionRequest.pointer.memory.data = Cast.toVoid(callback)
-
-    return Status(TCPConnect(connectionRequest.pointer, self.pointer, addr.pointer) { connection, status in
-      let callback: (ConnectionRequest, Status) -> Void = Cast.fromVoid(connection.memory.data)!
-      callback(ConnectionRequest(connection), Status(status))
-    })
-  }
+  /* public func connect(addr: Addr, callback: (ConnectionRequest, Status) -> Void) -> Status { */
+  /*   let connectionRequest = ConnectionRequest() */
+  /*   connectionRequest.pointer.memory.data = Cast.toVoid(callback) */
+  /*  */
+  /*   return Status(TCPConnect(connectionRequest.pointer, self.pointer, addr.pointer) { connection, status in */
+  /*     let callback: (ConnectionRequest, Status) -> Void = Cast.fromVoid(connection.memory.data)! */
+  /*     callback(ConnectionRequest(connection), Status(status)) */
+  /*   }) */
+  /* } */
 
   public func close(callback: (Handle) -> Void) {
     Handle(self).close(callback)
