@@ -10,6 +10,8 @@ Swiftest.register([
     WriteRequestSpec.self,
     AddrInSpec.self,
     AddrSpec.self,
+    BacklogSpec.self,
+    INetSpec.self,
     HandleEquatableSpec.self,
     StatusEquatableSpec.self,
     LoopEquatableSpec.self
