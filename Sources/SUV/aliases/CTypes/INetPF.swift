@@ -3,5 +3,5 @@
   public let INetPF = UInt32(PF_INET)
 #else
   @_exported import Glibc
-  public let INetPF = UInt32(PF_INET)
+  public let INetPF = UInt32(2)
 #endif
