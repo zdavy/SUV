@@ -8,6 +8,8 @@ Swiftest.register([
     LoopSpec.self,
     RunModeSpec.self,
     WriteRequestSpec.self,
+    AddrInSpec.self,
+    AddrSpec.self,
     HandleEquatableSpec.self,
     StatusEquatableSpec.self,
     LoopEquatableSpec.self
