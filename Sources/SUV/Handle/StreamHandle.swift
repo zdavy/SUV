@@ -23,15 +23,17 @@ public class StreamHandle: HandleType {
     })
   }
 
-  public func read(input: StreamHandle, alloc: Alloc = .Default, callback: (StreamHandle, Int, Buffer) -> Void) {
+  public func accept(input: StreamHandle) -> Status {
+    return Status(Accept(input.pointer, self.pointer))
+  }
+
+  public func read(alloc: Alloc = .Default, callback: (StreamHandle, Int, Buffer) -> Void) -> Status {
     self.pointer.memory.data = Cast.toVoid(callback)
 
-    Accept(input.pointer, self.pointer)
-
-    ReadStart(self.pointer, alloc.callback) { client, size, buffer in
+    return Status(ReadStart(self.pointer, alloc.callback) { client, size, buffer in
       let callback: (StreamHandle, Int, Buffer) -> Void = Cast.fromVoid(client.memory.data)!
       callback(StreamHandle(client), size, Buffer(buffer, size))
-    }
+    })
   }
 
   public func close(callback: (Handle -> Void)) {

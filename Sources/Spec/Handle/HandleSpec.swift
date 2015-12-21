@@ -1,5 +1,5 @@
-import SUV
 import Swiftest
+import SUV
 
 class HandleSpec: Spec {
   let spec = describe("Handle") {
@@ -25,7 +25,7 @@ class HandleSpec: Spec {
     }
 
     describe("close") {
-      it("yields the handle pointer to the closeCallback") {
+      it("yields the handle pointer to the Close function") {
         let handle = Handle(MockHandleType())
 
         Close = { handlePointer, callback in
