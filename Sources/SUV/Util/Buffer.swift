@@ -1,7 +1,7 @@
 public class Buffer {
   public let pointer: UnsafeMutablePointer<UVBufferType>
 
-  init(_ pointer: UnsafePointer<UVBufferType>, _ size: Int) {
+  public init(_ pointer: UnsafePointer<UVBufferType>, _ size: Int) {
     self.pointer = UnsafeMutablePointer.alloc(size)
     self.pointer.memory = BufferInit(pointer.memory.base, UInt32(size))
   }

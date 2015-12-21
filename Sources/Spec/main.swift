@@ -12,6 +12,8 @@ Swiftest.register([
     AddrSpec.self,
     BacklogSpec.self,
     INetSpec.self,
+    StatusSpec.self,
+    BufferSpec.self,
     HandleEquatableSpec.self,
     StatusEquatableSpec.self,
     LoopEquatableSpec.self
