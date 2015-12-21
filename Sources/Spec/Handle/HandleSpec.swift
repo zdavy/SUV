@@ -3,23 +3,52 @@ import Swiftest
 
 class HandleSpec: Spec {
   let spec = describe("Handle") {
-    describe("close") {
-      it("closes the handle") {
-        let handle = Handle(TCPHandle(Loop.defaultLoop))
+    describe("initialize") {
+      it("can be initialized from a HandleType") {
+        let handleType = MockHandleType()
 
-        expect(handle.isClosing).to.equal(false)
+        let handle = Handle(handleType)
 
-        handle.close { $0.free() }
-        Loop.defaultLoop.run(.Default)
-
-        expect(handle.isClosing).to.equal(true)
+        expect(handle.loop).to.equal(handleType.loop)
+        expect(handle.pointer).to.equal(handleType.pointer)
       }
 
-      it("yields itself in the callback") {
-        let handle = Handle(TCPHandle(Loop.defaultLoop))
+      it("can be initialized from a Handle pointer") {
+        let pointer = UnsafeMutablePointer<UVHandleType>.alloc(sizeof(UVHandleType))
+        pointer.memory.loop = Loop.defaultLoop.pointer
 
-        handle.close { expect($0).to.equal(handle) }
-        Loop.defaultLoop.run(.Default)
+        let handle = Handle(pointer)
+
+        expect(handle.loop).to.equal(Loop.defaultLoop)
+        expect(handle.pointer).to.equal(pointer)
+      }
+    }
+
+    describe("close") {
+      it("yields the handle pointer to the closeCallback") {
+        let handle = Handle(MockHandleType())
+
+        Close = { handlePointer, callback in
+          expect(handlePointer).to.equal(handle.pointer)
+        }
+
+        handle.close { _ in }
+      }
+
+      it("executes the provided callback in the closeCallback") {
+        let handle = Handle(MockHandleType())
+
+        Close = { handlePointer, callback in
+          callback(handlePointer)
+        }
+
+        var closeCallbackExecuted = false
+
+        handle.close { _ in
+          closeCallbackExecuted = true
+        }
+
+        expect(closeCallbackExecuted).to.equal(true)
       }
     }
   }
