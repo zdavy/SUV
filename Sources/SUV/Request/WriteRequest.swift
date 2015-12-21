@@ -1,5 +1,3 @@
-import libUV
-
 public class WriteRequest {
   public typealias Pointer = UnsafeMutablePointer<UVWriteType>
   public let pointer: Pointer
@@ -15,7 +13,7 @@ public class WriteRequest {
   public func write(stream: StreamHandle, _ buffer: Buffer, callback: (WriteRequest, Status) -> Void) -> Status {
     self.pointer.memory.data = Cast.toVoid(callback)
 
-    return Status(uv_write(pointer, stream.pointer, buffer.pointer, 1) { request, status in
+    return Status(Write(pointer, stream.pointer, buffer.pointer, 1) { request, status in
       let callback: (WriteRequest, Status) -> Void = Cast.fromVoid(request.memory.data)!
       callback(WriteRequest(request), Status(status))
     })

@@ -1,5 +1,3 @@
-import libUV
-
 public class AddrIn: AddrType {
   public typealias Pointer = UnsafeMutablePointer<SockAddrIn>
 
@@ -8,6 +6,6 @@ public class AddrIn: AddrType {
 
   public init(_ host: String, _ port: Int) {
     self.pointer = Pointer.alloc(sizeof(SockAddrIn))
-    self.status = Status(uv_ip4_addr(host, Int32(port), self.pointer))
+    self.status = Status(IP4Addr(host, Int32(port), self.pointer))
   }
 }

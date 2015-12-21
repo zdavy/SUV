@@ -1,5 +1,3 @@
-import libUV
-
 public class Handle: HandleType {
   public typealias Pointer = UnsafeMutablePointer<UVHandleType>
 
@@ -7,7 +5,7 @@ public class Handle: HandleType {
   public let loop: Loop
 
   public var isClosing: Bool {
-    return uv_is_closing(self.pointer) == 1
+    return IsClosing(self.pointer) == 1
   }
 
   public init<T: HandleType>(_ handle: T) {
@@ -23,7 +21,7 @@ public class Handle: HandleType {
   public func close(callback: (Handle) -> Void) {
     self.pointer.memory.data = Cast.toVoid(callback)
 
-    uv_close(self.pointer) { handle in
+    Close(self.pointer) { handle in
       let callback: (Handle) -> Void = Cast.fromVoid(handle.memory.data)!
       callback(Handle(handle))
     }

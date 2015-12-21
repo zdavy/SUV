@@ -1,5 +1,3 @@
-import libUV
-
 public class StreamHandle: HandleType {
   public typealias Pointer = UnsafeMutablePointer<UVStreamType>
 
@@ -19,7 +17,7 @@ public class StreamHandle: HandleType {
   public func listen(backlog: Backlog = .Max, callback: (StreamHandle, Status) -> Void) -> Status {
     self.pointer.memory.data = Cast.toVoid(callback)
 
-    return Status(uv_listen(self.pointer, backlog.amount) { stream, status in
+    return Status(Listen(self.pointer, backlog.amount) { stream, status in
       let callback: (StreamHandle, Status) -> Void = Cast.fromVoid(stream.memory.data)!
       callback(StreamHandle(stream), Status(status))
     })
@@ -28,9 +26,9 @@ public class StreamHandle: HandleType {
   public func read(input: StreamHandle, alloc: Alloc = .Default, callback: (StreamHandle, Int, Buffer) -> Void) {
     self.pointer.memory.data = Cast.toVoid(callback)
 
-    uv_accept(input.pointer, self.pointer)
+    Accept(input.pointer, self.pointer)
 
-    uv_read_start(self.pointer, alloc.callback) { client, size, buffer in
+    ReadStart(self.pointer, alloc.callback) { client, size, buffer in
       let callback: (StreamHandle, Int, Buffer) -> Void = Cast.fromVoid(client.memory.data)!
       callback(StreamHandle(client), size, Buffer(buffer, size))
     }
