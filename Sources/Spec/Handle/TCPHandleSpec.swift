@@ -1,5 +1,6 @@
-import Swiftest
+import UV
 import SUV
+import Swiftest
 
 class TCPHandleSpec: Spec {
     let spec = describe("TCPHandle") {

@@ -1,5 +1,6 @@
-import Swiftest
+import UV
 import SUV
+import Swiftest
 
 class StreamHandleSpec: Spec {
     let spec = describe("StreamHandle") {

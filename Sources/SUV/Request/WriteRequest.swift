@@ -1,3 +1,5 @@
+import UV
+
 public class WriteRequest {
   public typealias Pointer = UnsafeMutablePointer<UVWriteType>
   public let pointer: Pointer

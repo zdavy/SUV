@@ -1,5 +1,6 @@
-import Swiftest
+import UV
 import SUV
+import Swiftest
 
 class HandleSpec: Spec {
   let spec = describe("Handle") {
