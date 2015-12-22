@@ -1,4 +1,3 @@
-import UV
 /* public var BufferInit: UVBufferInitFn = UVBufferInit */
 
 public enum BufferInit {

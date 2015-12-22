@@ -1,5 +1,3 @@
-import UV
-
 public class AddrIn: AddrType {
   public typealias Pointer = UnsafeMutablePointer<SockAddrIn>
 

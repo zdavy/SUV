@@ -1,5 +1,3 @@
-import UV
-
 public enum OnAlloc {
   case Default
   case OnAlloc(UVAllocCallback)

@@ -1,5 +1,3 @@
-@_exported import UV
-
 public class Loop {
   public typealias Pointer = UnsafeMutablePointer<UVLoopType>
 

@@ -1,5 +1,3 @@
-import UV
-
 public enum Backlog {
   case Max
   case Exactly(Int32)

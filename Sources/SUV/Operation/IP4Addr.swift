@@ -1,4 +1,3 @@
-import UV
 /* public var IP4Addr: UVIP4AddrFn = UVIP4Addr */
 
 public enum IP4Addr {

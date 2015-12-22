@@ -1,4 +1,3 @@
-import UV
 /* public var TCPInit: UVTCPInitFn = UVTCPInit */
 
 public enum TCPInit {

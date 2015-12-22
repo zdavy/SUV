@@ -1,5 +1,3 @@
-import UV
-
 public class Handle: HandleType {
   public typealias Pointer = UnsafeMutablePointer<UVHandleType>
 

@@ -1,4 +1,3 @@
-import UV
 /* public var Close: UVCloseFn = UVClose */
 
 public enum Close {

@@ -1,4 +1,3 @@
-import UV
 /* public var TCPConnect: UVTCPConnectFn = UVTCPConnect */
 
 public enum TCPConnect {

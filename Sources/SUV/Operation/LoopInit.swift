@@ -1,4 +1,3 @@
-import UV
 /* public var LoopInit: UVLoopInitFn = UVLoopInit */
 
 public enum LoopInit {

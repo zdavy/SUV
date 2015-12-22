@@ -1,4 +1,3 @@
-import UV
 /* public var Accept: UVAcceptFn = UVAccept */
 
 public enum Accept {

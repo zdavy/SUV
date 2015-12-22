@@ -1,4 +1,3 @@
-import UV
 /* public var TCPBind: UVTCPBindFn = UVTCPBind */
 
 public enum TCPBind {

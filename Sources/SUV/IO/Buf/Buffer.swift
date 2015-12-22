@@ -1,5 +1,3 @@
-import UV
-
 public class Buffer {
   public let pointer: UnsafeMutablePointer<UVBufferType>
 

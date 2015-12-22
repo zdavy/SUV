@@ -1,5 +1,3 @@
-import UV
-
 public class TCPHandle: HandleType {
   public typealias Pointer = UnsafeMutablePointer<UVTCPType>
 

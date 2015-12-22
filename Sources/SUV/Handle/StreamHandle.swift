@@ -1,5 +1,3 @@
-import UV
-
 public class StreamHandle: HandleType {
   public typealias Pointer = UnsafeMutablePointer<UVStreamType>
 

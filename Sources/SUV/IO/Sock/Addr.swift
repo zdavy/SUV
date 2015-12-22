@@ -1,5 +1,3 @@
-import UV
-
 public class Addr {
   public typealias Pointer = UnsafePointer<SockAddr>
   public let pointer: Pointer

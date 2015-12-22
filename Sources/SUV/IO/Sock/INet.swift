@@ -1,5 +1,3 @@
-import UV
-
 public enum INet {
   case AF
   case PF
