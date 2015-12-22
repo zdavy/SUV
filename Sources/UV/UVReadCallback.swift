@@ -1,3 +1,3 @@
 import libUV
 
-public typealias UVReadCallback = uv_read_cb
+public typealias UVReadCallback = uv_read_cb!

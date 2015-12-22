@@ -1,3 +1,3 @@
 import libUV
 
-public typealias UVWriteCallback = uv_write_cb
+public typealias UVWriteCallback = uv_write_cb!

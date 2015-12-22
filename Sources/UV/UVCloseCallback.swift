@@ -1,3 +1,3 @@
 import libUV
 
-public typealias UVCloseCallback = uv_close_cb
+public typealias UVCloseCallback = uv_close_cb!
