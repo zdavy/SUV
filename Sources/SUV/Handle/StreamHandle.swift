@@ -29,7 +29,7 @@ public class StreamHandle: HandleType {
     return Status(uv_accept.call(input.pointer, self.pointer))
   }
 
-  public func read(uv_read_start: ReadStart = .UV, alloc: Alloc = .Default, callback: (StreamHandle, Int, Buffer) -> Void) -> Status {
+  public func read(uv_read_start: ReadStart = .UV, alloc: OnAlloc = .Default, callback: (StreamHandle, Int, Buffer) -> Void) -> Status {
     self.pointer.memory.data = Cast.toVoid(callback)
 
     return Status(uv_read_start.call(self.pointer, alloc.callback) { client, size, buffer in
