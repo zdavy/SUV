@@ -2,14 +2,13 @@ public enum Alloc {
   case Default
   case OnAlloc(UVAllocCallback)
 
-  var callback: UVAllocCallback {
-    get {
+  public var callback: UVAllocCallback {
       switch self {
-        case .Default: return { _, size, buffer in
-          buffer.memory = BufferInit(UnsafeMutablePointer.alloc(size), UInt32(size))
+        case .Default: return { handle, size, buffer in
+          let uv_buf_init: BufferInit = Cast.fromVoid(handle.memory.data)!
+          buffer.memory = uv_buf_init.call(UnsafeMutablePointer.alloc(size), UInt32(size))
         }
         case .OnAlloc(let cb): return cb
       }
-    }
   }
 }

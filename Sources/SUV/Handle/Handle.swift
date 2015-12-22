@@ -4,10 +4,6 @@ public class Handle: HandleType {
   public let pointer: Pointer
   public let loop: Loop
 
-  public var isClosing: Bool {
-    return IsClosing(self.pointer) == 1
-  }
-
   public init<T: HandleType>(_ handle: T) {
     self.pointer = Pointer(handle.pointer)
     self.loop = handle.loop
@@ -18,10 +14,14 @@ public class Handle: HandleType {
     self.loop = Loop(pointer.memory.loop)
   }
 
-  public func close(callback: (Handle) -> Void) {
+  public func isClosing(uv_is_closing: IsClosing = .UV) -> Bool {
+    return uv_is_closing.call(self.pointer) == 1
+  }
+
+  public func close(uv_close: Close = .UV, _ callback: (Handle) -> Void) {
     self.pointer.memory.data = Cast.toVoid(callback)
 
-    Close(self.pointer) { handle in
+    uv_close.call(self.pointer) { handle in
       let callback: (Handle) -> Void = Cast.fromVoid(handle.memory.data)!
       callback(Handle(handle))
     }

@@ -8,31 +8,31 @@ class LoopSpec: Spec {
         it("initializes an event loop via LoopInit") {
           var pointer: UnsafeMutablePointer<UVLoopType>! = nil
 
-          LoopInit = { loopPointer in
+          let loopInit = LoopInit.Custom({ loopPointer in
             pointer = loopPointer
             return 0
-          }
+          })
 
-          let loop = Loop()
+          let loop = Loop(loopInit)
           expect(pointer).to.equal(loop.pointer)
         }
 
         it("status is .OK if LoopInit is successful") {
-          LoopInit = { _ in
+          let loopInit = LoopInit.Custom({ _ in
             return 0
-          }
+          })
 
-          expect(Loop().status).to.equal(.OK)
+          expect(Loop(loopInit).status).to.equal(.OK)
         }
 
         it("status is .Fail with code if LoopInit is not successful") {
           let code: Int32 = -1
 
-          LoopInit = { _ in
+          let loopInit = LoopInit.Custom({ _ in
             return code
-          }
+          })
 
-          expect(Loop().status).to.equal(.Fail(code))
+          expect(Loop(loopInit).status).to.equal(.Fail(code))
         }
       }
 
@@ -40,11 +40,6 @@ class LoopSpec: Spec {
         it("des not call LoopInit") {
           var loopInitCalled = false
           let pointer = UnsafeMutablePointer<UVLoopType>.alloc(sizeof(UVLoopType))
-
-          LoopInit = { _ in
-            loopInitCalled = true
-            return 0
-          }
 
           let _ = Loop(pointer)
           expect(loopInitCalled).to.equal(false)
@@ -75,31 +70,31 @@ class LoopSpec: Spec {
         let loop = Loop.defaultLoop
         let mode: RunMode = .Default
 
-        Run = { loopPointer, modeValue in
+        let run = Run.Custom({ loopPointer, modeValue in
           expect(loopPointer).to.equal(loop.pointer)
           expect(modeValue).to.equal(mode.value)
           return 0
-        }
+        })
 
-        loop.run(mode)
+        loop.run(run, mode)
       }
 
       it("returns .OK when Run is successful") {
-        Run = { _, _ in
+        let run = Run.Custom({ _, _ in
           return 0
-        }
+        })
 
-        expect(Loop.defaultLoop.run(.Default)).to.equal(.OK)
+        expect(Loop.defaultLoop.run(run, .Default)).to.equal(.OK)
       }
 
       it("returns .Fail with code when Run is not successful") {
         let code: Int32 = -1
 
-        Run = { _, _ in
+        let run = Run.Custom({ _, _ in
           return code
-        }
+        })
 
-        expect(Loop.defaultLoop.run(.Default)).to.equal(.Fail(code))
+        expect(Loop.defaultLoop.run(run, .Default)).to.equal(.Fail(code))
       }
     }
   }
