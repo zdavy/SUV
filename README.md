@@ -31,7 +31,10 @@ Import SUV, write some code, and start the event loop.
 
     StreamHandle(server).listen { connection, status in
       let client = StreamHandle(TCPHandle(connection.loop))
-      client.read(connection) { stream, result, buffer in
+
+      client.accept(connection)
+
+      client.read { stream, result, buffer in
         WriteRequest().write(stream, buffer) { request, status in
           request.free()
           client.close { $0.free() }
