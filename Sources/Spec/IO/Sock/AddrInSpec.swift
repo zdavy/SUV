@@ -15,7 +15,7 @@ class AddrInSpec: Spec {
             return 0
           })
 
-          let addrin = AddrIn(ip4Addr, "host", 1000)
+          let addrin = AddrIn("host", 1000, ip4Addr)
           expect(addrin.pointer).to.equal(addrinPointer)
         }
 
@@ -24,7 +24,7 @@ class AddrInSpec: Spec {
             return 0
           })
 
-          expect(AddrIn(ip4Addr, "host", 1000).status).to.equal(.OK)
+          expect(AddrIn("host", 1000, ip4Addr).status).to.equal(.OK)
         }
 
         it("status is .Fail with code if IP4Addr is not successful") {
@@ -34,7 +34,7 @@ class AddrInSpec: Spec {
             return code
           })
 
-          expect(AddrIn(ip4Addr, "host", 1000).status).to.equal(.Fail(code))
+          expect(AddrIn("host", 1000, ip4Addr).status).to.equal(.Fail(code))
         }
       }
     }

@@ -25,7 +25,7 @@ public class StreamHandle: HandleType {
     })
   }
 
-  public func accept(uv_accept: Accept = .UV, _ input: StreamHandle) -> Status {
+  public func accept(input: StreamHandle, _ uv_accept: Accept = .UV) -> Status {
     return Status(uv_accept.call(input.pointer, self.pointer))
   }
 

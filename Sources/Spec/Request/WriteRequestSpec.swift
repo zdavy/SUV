@@ -26,7 +26,7 @@ class WriteRequestSpec: Spec {
             return 0
           })
 
-          writeRequest.write(write, stream, buffer) { _,_ in }
+          writeRequest.write(stream, buffer, write) { _,_ in }
         }
 
         it("returns .OK if Write is successful") {
@@ -38,7 +38,7 @@ class WriteRequestSpec: Spec {
             return 0
           })
 
-          expect(writeRequest.write(write, stream, buffer) { _,_ in }).to.equal(.OK)
+          expect(writeRequest.write(stream, buffer, write) { _,_ in }).to.equal(.OK)
         }
 
         it("returns .Fail with code if Write is not successful") {
@@ -51,7 +51,7 @@ class WriteRequestSpec: Spec {
             return code
           })
 
-          expect(writeRequest.write(write, stream, buffer) { _,_ in }).to.equal(.Fail(code))
+          expect(writeRequest.write(stream, buffer, write) { _,_ in }).to.equal(.Fail(code))
         }
 
         it("executes the provided callback in the WriteCallback") {
@@ -66,7 +66,7 @@ class WriteRequestSpec: Spec {
 
           var closeCallbackExecuted = false
 
-          writeRequest.write(write, stream, buffer) { _, _ in
+          writeRequest.write(stream, buffer, write) { _, _ in
             closeCallbackExecuted = true
           }
 

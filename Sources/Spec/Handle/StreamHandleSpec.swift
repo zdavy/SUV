@@ -112,7 +112,7 @@ class StreamHandleSpec: Spec {
             return 0
           })
 
-          streamHandle.accept(accept, connection)
+          streamHandle.accept(connection, accept)
         }
 
         it("return .OK when accept is successful") {
@@ -123,7 +123,7 @@ class StreamHandleSpec: Spec {
             return 0
           })
 
-          expect(streamHandle.accept(accept, connection)).to.equal(.OK)
+          expect(streamHandle.accept(connection, accept)).to.equal(.OK)
         }
 
         it("return .Fail with code when listen is not successful") {
@@ -135,7 +135,7 @@ class StreamHandleSpec: Spec {
             return code
           })
 
-          expect(streamHandle.accept(accept, connection)).to.equal(.Fail(code))
+          expect(streamHandle.accept(connection, accept)).to.equal(.Fail(code))
         }
       }
 

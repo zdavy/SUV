@@ -6,7 +6,7 @@ public class AddrIn: AddrType {
   public let pointer: Pointer
   public let status: Status
 
-  public init(_ uv_ip4_addr: IP4Addr = .UV, _ host: String, _ port: Int) {
+  public init(_ host: String, _ port: Int, _ uv_ip4_addr: IP4Addr = .UV) {
     self.pointer = Pointer.alloc(sizeof(SockAddrIn))
     self.status = Status(uv_ip4_addr.call(host, Int32(port), self.pointer))
   }

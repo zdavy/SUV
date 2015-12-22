@@ -77,7 +77,7 @@ class LoopSpec: Spec {
           return 0
         })
 
-        loop.run(run, mode)
+        loop.run(mode, run)
       }
 
       it("returns .OK when Run is successful") {
@@ -85,7 +85,7 @@ class LoopSpec: Spec {
           return 0
         })
 
-        expect(Loop.defaultLoop.run(run, .Default)).to.equal(.OK)
+        expect(Loop.defaultLoop.run(.Default, run)).to.equal(.OK)
       }
 
       it("returns .Fail with code when Run is not successful") {
@@ -95,7 +95,7 @@ class LoopSpec: Spec {
           return code
         })
 
-        expect(Loop.defaultLoop.run(run, .Default)).to.equal(.Fail(code))
+        expect(Loop.defaultLoop.run(.Default, run)).to.equal(.Fail(code))
       }
     }
   }

@@ -15,7 +15,7 @@ class BufferSpec: Spec {
             return UVBufferType()
           })
 
-          let _ = Buffer(bufferInit, ref, size)
+          let _ = Buffer(ref, size, bufferInit)
         }
 
         it("calls buffer init with newly alloc'd pointer") {

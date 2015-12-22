@@ -7,14 +7,14 @@ public class TCPHandle: HandleType {
   public let pointer: Pointer
   public let status: Status
 
-  public init(_ uv_tcp_init: TCPInit = .UV, _ loop: Loop) {
+  public init(_ loop: Loop, _ uv_tcp_init: TCPInit = .UV) {
     self.loop = loop
     self.pointer = Pointer.alloc(sizeof(UVTCPType))
 
     self.status = Status(uv_tcp_init.call(self.loop.pointer, self.pointer))
   }
 
-  public func bind(uv_tcp_bind: TCPBind = .UV, _ addr: Addr, _ inet: INet = .AF) -> SUV.Status {
+  public func bind(addr: Addr, _ uv_tcp_bind: TCPBind = .UV, _ inet: INet = .AF) -> SUV.Status {
     return Status(uv_tcp_bind.call(self.pointer, addr.pointer, inet.family))
   }
 

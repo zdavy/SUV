@@ -1,4 +1,4 @@
-import UV
+@_exported import UV
 
 public class Loop {
   public typealias Pointer = UnsafeMutablePointer<UVLoopType>
@@ -18,7 +18,7 @@ public class Loop {
     self.status = .OK
   }
 
-  public func run(uv_run: Run = .UV, _ runMode: RunMode) -> Status {
+  public func run(runMode: RunMode, _ uv_run: Run = .UV) -> Status {
     return Status(uv_run.call(self.pointer, runMode.value))
   }
 }

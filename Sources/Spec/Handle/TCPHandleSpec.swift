@@ -15,7 +15,7 @@ class TCPHandleSpec: Spec {
             return 0
           })
 
-          let tcpHandle = TCPHandle(tcpInit, Loop.defaultLoop)
+          let tcpHandle = TCPHandle(Loop.defaultLoop, tcpInit)
 
           expect(loop).to.equal(Loop.defaultLoop.pointer)
           expect(tcp).to.equal(tcpHandle.pointer)
@@ -26,7 +26,7 @@ class TCPHandleSpec: Spec {
             return 0
           })
 
-          let tcpHandle = TCPHandle(tcpInit, Loop.defaultLoop)
+          let tcpHandle = TCPHandle(Loop.defaultLoop, tcpInit)
           expect(tcpHandle.status).to.equal(.OK)
         }
 
@@ -37,7 +37,7 @@ class TCPHandleSpec: Spec {
             return code
           })
 
-          let tcpHandle = TCPHandle(tcpInit, Loop.defaultLoop)
+          let tcpHandle = TCPHandle(Loop.defaultLoop, tcpInit)
           expect(tcpHandle.status).to.equal(.Fail(code))
         }
       }
@@ -48,8 +48,8 @@ class TCPHandleSpec: Spec {
             return 0
           })
 
-          let tcpHandle = TCPHandle(tcpInit, Loop.defaultLoop)
-          let addr = Addr(AddrIn(.UV, "0.0.0.0", 9999))
+          let tcpHandle = TCPHandle(Loop.defaultLoop, tcpInit)
+          let addr = Addr(AddrIn("0.0.0.0", 9999))
 
           let tcpBind = TCPBind.Custom({ tcpHandlePointer, addrPointer, _ in
             expect(tcpHandlePointer).to.equal(tcpHandle.pointer)
@@ -57,7 +57,7 @@ class TCPHandleSpec: Spec {
             return 0
           })
 
-          tcpHandle.bind(tcpBind, addr)
+          tcpHandle.bind(addr, tcpBind)
         }
 
         it("passes the .AF address family by default") {
@@ -65,15 +65,15 @@ class TCPHandleSpec: Spec {
             return 0
           })
 
-          let tcpHandle = TCPHandle(tcpInit, Loop.defaultLoop)
-          let addr = Addr(AddrIn(.UV, "0.0.0.0", 9999))
+          let tcpHandle = TCPHandle(Loop.defaultLoop, tcpInit)
+          let addr = Addr(AddrIn("0.0.0.0", 9999))
 
           let tcpBind = TCPBind.Custom({ _, _, addressFamily in
             expect(addressFamily).to.equal(INet.AF.family)
             return 0
           })
 
-          tcpHandle.bind(tcpBind, addr)
+          tcpHandle.bind(addr, tcpBind)
         }
 
         it("passes the provided address family") {
@@ -83,15 +83,15 @@ class TCPHandleSpec: Spec {
 
           let providedAddressFamily: INet = .PF
 
-          let tcpHandle = TCPHandle(tcpInit, Loop.defaultLoop)
-          let addr = Addr(AddrIn(.UV, "0.0.0.0", 9999))
+          let tcpHandle = TCPHandle(Loop.defaultLoop, tcpInit)
+          let addr = Addr(AddrIn("0.0.0.0", 9999))
 
           let tcpBind = TCPBind.Custom({_, _, addressFamily in
             expect(addressFamily).to.equal(providedAddressFamily.family)
             return 0
           })
 
-          tcpHandle.bind(tcpBind, addr, providedAddressFamily)
+          tcpHandle.bind(addr, tcpBind, providedAddressFamily)
         }
 
         it("returns .OK if the TCPBind is sucessful") {
@@ -99,14 +99,14 @@ class TCPHandleSpec: Spec {
             return 0
           })
 
-          let tcpHandle = TCPHandle(tcpInit, Loop.defaultLoop)
-          let addr = Addr(AddrIn(.UV, "0.0.0.0", 9999))
+          let tcpHandle = TCPHandle(Loop.defaultLoop, tcpInit)
+          let addr = Addr(AddrIn("0.0.0.0", 9999))
 
           let tcpBind = TCPBind.Custom({_,_,_ in
             return 0
           })
 
-          expect(tcpHandle.bind(tcpBind, addr)).to.equal(.OK)
+          expect(tcpHandle.bind(addr, tcpBind)).to.equal(.OK)
         }
 
         it("returns .Fail with the status code if the TCPBind is not sucessful") {
@@ -116,14 +116,14 @@ class TCPHandleSpec: Spec {
             return 0
           })
 
-          let tcpHandle = TCPHandle(tcpInit, Loop.defaultLoop)
-          let addr = Addr(AddrIn(.UV, "0.0.0.0", 9999))
+          let tcpHandle = TCPHandle(Loop.defaultLoop, tcpInit)
+          let addr = Addr(AddrIn("0.0.0.0", 9999))
 
           let tcpBind = TCPBind.Custom({_,_,_ in
             return code
           })
 
-          expect(tcpHandle.bind(tcpBind, addr)).to.equal(.Fail(code))
+          expect(tcpHandle.bind(addr, tcpBind)).to.equal(.Fail(code))
         }
       }
 
@@ -133,7 +133,7 @@ class TCPHandleSpec: Spec {
             return 0
           })
 
-          let tcpHandle = TCPHandle(tcpInit, Loop.defaultLoop)
+          let tcpHandle = TCPHandle(Loop.defaultLoop, tcpInit)
 
           let callback = Close.Custom({ handlePointer, _ in
             expect(handlePointer).to.equal(Handle(tcpHandle).pointer)
@@ -147,7 +147,7 @@ class TCPHandleSpec: Spec {
             return 0
           })
 
-          let tcpHandle = TCPHandle(tcpInit, Loop.defaultLoop)
+          let tcpHandle = TCPHandle(Loop.defaultLoop, tcpInit)
 
           let callback = Close.Custom({ handlePointer, closeCallback in
             closeCallback(handlePointer)
