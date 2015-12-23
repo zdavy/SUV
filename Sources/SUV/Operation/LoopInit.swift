@@ -1,13 +1,13 @@
-/* public var LoopInit: UVLoopInitFn = UVLoopInit */
+/* public var LoopInit: UVLoopInitOperation = UVLoopInit */
 
 public enum LoopInit {
   case UV
-  case Custom(UVLoopInitFn)
+  case Custom(UVLoopInitOperation)
 
-  public var call: UVLoopInitFn {
+  public var call: UVLoopInitOperation {
     switch self {
       case UV: return UVLoopInit
-      case Custom(let loopInitFn): return loopInitFn
+      case Custom(let loopInitOperation): return loopInitOperation
     }
   }
 }

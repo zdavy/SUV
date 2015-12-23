@@ -1,13 +1,13 @@
-/* public var IP4Addr: UVIP4AddrFn = UVIP4Addr */
+/* public var IP4Addr: UVIP4AddrOperation = UVIP4Addr */
 
 public enum IP4Addr {
   case UV
-  case Custom(UVIP4AddrFn)
+  case Custom(UVIP4AddrOperation)
 
-  public var call: UVIP4AddrFn {
+  public var call: UVIP4AddrOperation {
     switch self {
       case UV: return UVIP4Addr
-      case Custom(let ip4AddrFn): return ip4AddrFn
+      case Custom(let ip4AddrOperation): return ip4AddrOperation
     }
   }
 }

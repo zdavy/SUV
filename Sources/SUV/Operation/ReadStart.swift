@@ -1,13 +1,13 @@
-/* public var ReadStart: UVReadStartFn = UVReadStart */
+/* public var ReadStart: UVReadStartOperation = UVReadStart */
 
 public enum ReadStart {
   case UV
-  case Custom(UVReadStartFn)
+  case Custom(UVReadStartOperation)
 
-  public var call: UVReadStartFn {
+  public var call: UVReadStartOperation {
     switch self {
       case UV: return UVReadStart
-      case Custom(let readStartFn): return readStartFn
+      case Custom(let readStartOperation): return readStartOperation
     }
   }
 }

@@ -1,4 +1,4 @@
 import libUV
 
-public typealias UVLoopInitFn = (UnsafeMutablePointer<UVLoopType>) -> Int32
-public let UVLoopInit: UVLoopInitFn = uv_loop_init
+public typealias UVLoopInitOperation = (UnsafeMutablePointer<UVLoopType>) -> Int32
+public let UVLoopInit: UVLoopInitOperation = uv_loop_init

@@ -1,13 +1,13 @@
-/* public var BufferInit: UVBufferInitFn = UVBufferInit */
+/* public var BufferInit: UVBufferInitOperation = UVBufferInit */
 
 public enum BufferInit {
   case UV
-  case Custom(UVBufferInitFn)
+  case Custom(UVBufferInitOperation)
 
-  public var call: UVBufferInitFn {
+  public var call: UVBufferInitOperation {
     switch self {
       case UV: return UVBufferInit
-      case Custom(let bufferInitFn): return bufferInitFn
+      case Custom(let bufferInitOperation): return bufferInitOperation
     }
   }
 }

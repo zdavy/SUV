@@ -1,4 +1,4 @@
 import libUV
 
-public typealias UVTCPInitFn = (UnsafeMutablePointer<UVLoopType>, UnsafeMutablePointer<UVTCPType>) -> Int32
-public let UVTCPInit: UVTCPInitFn = uv_tcp_init
+public typealias UVTCPInitOperation = (UnsafeMutablePointer<UVLoopType>, UnsafeMutablePointer<UVTCPType>) -> Int32
+public let UVTCPInit: UVTCPInitOperation = uv_tcp_init

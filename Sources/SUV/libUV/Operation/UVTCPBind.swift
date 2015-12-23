@@ -1,4 +1,4 @@
 import libUV
 
-public typealias UVTCPBindFn = (UnsafeMutablePointer<UVTCPType>, UnsafePointer<SockAddr>, UInt32) -> Int32
-public let UVTCPBind: UVTCPBindFn = uv_tcp_bind
+public typealias UVTCPBindOperation = (UnsafeMutablePointer<UVTCPType>, UnsafePointer<SockAddr>, UInt32) -> Int32
+public let UVTCPBind: UVTCPBindOperation = uv_tcp_bind

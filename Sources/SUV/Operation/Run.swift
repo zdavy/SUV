@@ -1,13 +1,13 @@
-/* public var Run: UVRunFn = UVRun */
+/* public var Run: UVRunOperation = UVRun */
 
 public enum Run {
   case UV
-  case Custom(UVRunFn)
+  case Custom(UVRunOperation)
 
-  public var call: UVRunFn {
+  public var call: UVRunOperation {
     switch self {
       case UV: return UVRun
-      case Custom(let runFn): return runFn
+      case Custom(let runOperation): return runOperation
     }
   }
 }

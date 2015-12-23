@@ -1,4 +1,4 @@
 import libUV
 
-public typealias UVCloseFn = (UnsafeMutablePointer<UVHandleType>, UVCloseCallback) -> Void
-public let UVClose: UVCloseFn = uv_close
+public typealias UVCloseOperation = (UnsafeMutablePointer<UVHandleType>, UVCloseCallback) -> Void
+public let UVClose: UVCloseOperation = uv_close

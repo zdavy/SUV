@@ -1,13 +1,13 @@
-/* public var TCPConnect: UVTCPConnectFn = UVTCPConnect */
+/* public var TCPConnect: UVTCPConnectOperation = UVTCPConnect */
 
 public enum TCPConnect {
   case UV
-  case Custom(UVTCPConnectFn)
+  case Custom(UVTCPConnectOperation)
 
-  public var call: UVTCPConnectFn {
+  public var call: UVTCPConnectOperation {
     switch self {
       case UV: return UVTCPConnect
-      case Custom(let tcpConnectFn): return tcpConnectFn
+      case Custom(let tcpConnectOperation): return tcpConnectOperation
     }
   }
 }

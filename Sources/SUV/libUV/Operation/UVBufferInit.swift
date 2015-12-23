@@ -1,4 +1,4 @@
 import libUV
 
-public typealias UVBufferInitFn = (UnsafeMutablePointer<Int8>, UInt32) -> UVBufferType
-public let UVBufferInit: UVBufferInitFn = uv_buf_init
+public typealias UVBufferInitOperation = (UnsafeMutablePointer<Int8>, UInt32) -> UVBufferType
+public let UVBufferInit: UVBufferInitOperation = uv_buf_init

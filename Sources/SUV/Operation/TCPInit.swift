@@ -1,13 +1,13 @@
-/* public var TCPInit: UVTCPInitFn = UVTCPInit */
+/* public var TCPInit: UVTCPInitOperation = UVTCPInit */
 
 public enum TCPInit {
   case UV
-  case Custom(UVTCPInitFn)
+  case Custom(UVTCPInitOperation)
 
-  public var call: UVTCPInitFn {
+  public var call: UVTCPInitOperation {
     switch self {
       case UV: return UVTCPInit
-      case Custom(let tcpInitFn): return tcpInitFn
+      case Custom(let tcpInitOperation): return tcpInitOperation
     }
   }
 }

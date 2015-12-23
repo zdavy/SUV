@@ -1,13 +1,13 @@
-/* public var Accept: UVAcceptFn = UVAccept */
+/* public var Accept: UVAcceptOperation = UVAccept */
 
 public enum Accept {
   case UV
-  case Custom(UVAcceptFn)
+  case Custom(UVAcceptOperation)
 
-  public var call: UVAcceptFn {
+  public var call: UVAcceptOperation {
     switch self {
       case UV: return UVAccept
-      case Custom(let acceptFn): return acceptFn
+      case Custom(let acceptOperation): return acceptOperation
     }
   }
 }

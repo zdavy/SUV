@@ -1,13 +1,13 @@
-/* public var Close: UVCloseFn = UVClose */
+/* public var Close: UVCloseOperation = UVClose */
 
 public enum Close {
   case UV
-  case Custom(UVCloseFn)
+  case Custom(UVCloseOperation)
 
-  public var call: UVCloseFn {
+  public var call: UVCloseOperation {
     switch self {
       case UV: return UVClose
-      case Custom(let closeFn): return closeFn
+      case Custom(let closeOperation): return closeOperation
     }
   }
 }

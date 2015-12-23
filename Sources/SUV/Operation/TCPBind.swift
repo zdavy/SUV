@@ -1,13 +1,13 @@
-/* public var TCPBind: UVTCPBindFn = UVTCPBind */
+/* public var TCPBind: UVTCPBindOperation = UVTCPBind */
 
 public enum TCPBind {
   case UV
-  case Custom(UVTCPBindFn)
+  case Custom(UVTCPBindOperation)
 
-  public var call: UVTCPBindFn {
+  public var call: UVTCPBindOperation {
     switch self {
       case UV: return UVTCPBind
-      case Custom(let tcpBindFn): return tcpBindFn
+      case Custom(let tcpBindOperation): return tcpBindOperation
     }
   }
 }
