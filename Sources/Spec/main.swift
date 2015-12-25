@@ -7,7 +7,7 @@ Swiftest.register([
     CastSpec.self,
     LoopSpec.self,
     RunModeSpec.self,
-    FilesystemRequestSpec.self,
+    FSRequestSpec.self,
     FSSpec.self,
     WriteRequestSpec.self,
     AddrInSpec.self,

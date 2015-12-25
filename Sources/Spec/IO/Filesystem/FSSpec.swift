@@ -15,7 +15,7 @@ class FSSpec: Spec {
           let testPath = "test.txt"
           let fs = FS(Loop.defaultLoop)
 
-          let open = FilesystemOpen.Custom({loop, request, path, access, mode, _ in
+          let open = FSOpen.Custom({loop, request, path, access, mode, _ in
               expect(loop).to.equal(Loop.defaultLoop.pointer)
               expect(request).to.equal(fs.pointer)
               expect(String.fromCString(path)).to.equal(testPath)
@@ -31,7 +31,7 @@ class FSSpec: Spec {
         it("executes the provided callback in the callback-hook") {
           let fs = FS(Loop.defaultLoop)
 
-          let open = FilesystemOpen.Custom({_, request, _,_,_, callback in
+          let open = FSOpen.Custom({_, request, _,_,_, callback in
               callback(request)
               return 0
           })
@@ -48,7 +48,7 @@ class FSSpec: Spec {
         it("returns .OK when uv_fs_open is successful") {
           let fs = FS(Loop.defaultLoop)
 
-          let open = FilesystemOpen.Custom({ _,_,_,_,_,_ in
+          let open = FSOpen.Custom({ _,_,_,_,_,_ in
               return 0
           })
 
@@ -59,7 +59,7 @@ class FSSpec: Spec {
           let code: Int32 = -1
           let fs = FS(Loop.defaultLoop)
 
-          let open = FilesystemOpen.Custom({ _,_,_,_,_,_ in
+          let open = FSOpen.Custom({ _,_,_,_,_,_ in
               return code
           })
 
@@ -74,7 +74,7 @@ class FSSpec: Spec {
           let testBuffer = Buffer()
           let testSize = 10
 
-          let read = FilesystemRead.Custom({loop, request, file, buffer, size,_,_ in
+          let read = FSRead.Custom({loop, request, file, buffer, size,_,_ in
               expect(loop).to.equal(Loop.defaultLoop.pointer)
               expect(request).to.equal(fs.pointer)
               expect(file).to.equal(testFile.ref)
@@ -90,7 +90,7 @@ class FSSpec: Spec {
         it("defaults the offset to -1 when not provided") {
           let fs = FS(Loop.defaultLoop)
 
-          let read = FilesystemRead.Custom({ _,_,_,_,_, offset,_ in
+          let read = FSRead.Custom({ _,_,_,_,_, offset,_ in
               expect(offset).to.equal(-1)
               return 0
           })
@@ -101,7 +101,7 @@ class FSSpec: Spec {
         it("uses the given offset when provided") {
           let fs = FS(Loop.defaultLoop)
 
-          let read = FilesystemRead.Custom({ _,_,_,_,_, offset,_ in
+          let read = FSRead.Custom({ _,_,_,_,_, offset,_ in
               expect(offset).to.equal(5)
               return 0
           })
@@ -112,7 +112,7 @@ class FSSpec: Spec {
         it("executes the provided callback in the callback-hook") {
           let fs = FS(Loop.defaultLoop)
 
-          let read = FilesystemRead.Custom({_,request,_,_,_,_, callback in
+          let read = FSRead.Custom({_,request,_,_,_,_, callback in
               callback(request)
               return 0
           })
@@ -129,7 +129,7 @@ class FSSpec: Spec {
         it("returns .OK when uv_fs_read is successful") {
           let fs = FS(Loop.defaultLoop)
 
-          let read = FilesystemRead.Custom({_,_,_,_,_,_,_ in
+          let read = FSRead.Custom({_,_,_,_,_,_,_ in
               return 0
           })
 
@@ -140,7 +140,7 @@ class FSSpec: Spec {
           let code: Int32 = -1
           let fs = FS(Loop.defaultLoop)
 
-          let read = FilesystemRead.Custom({_,_,_,_,_,_,_ in
+          let read = FSRead.Custom({_,_,_,_,_,_,_ in
               return code
           })
 
@@ -154,7 +154,7 @@ class FSSpec: Spec {
           let testBuffer = Buffer()
           let testSize = 10
 
-          let write = FilesystemWrite.Custom({loop, request, output, buffer, size,_,_ in
+          let write = FSWrite.Custom({loop, request, output, buffer, size,_,_ in
               expect(loop).to.equal(Loop.defaultLoop.pointer)
               expect(request).to.equal(fs.pointer)
               expect(output).to.equal(FileDescriptor.STDOUT.flag)
@@ -169,7 +169,7 @@ class FSSpec: Spec {
         it("defaults the offset to -1 when not provided") {
           let fs = FS(Loop.defaultLoop)
 
-          let write = FilesystemWrite.Custom({_,_,_,_,_,offset,_ in
+          let write = FSWrite.Custom({_,_,_,_,_,offset,_ in
               expect(offset).to.equal(-1)
               return 0
           })
@@ -180,7 +180,7 @@ class FSSpec: Spec {
         it("uses the given offset when provided") {
           let fs = FS(Loop.defaultLoop)
 
-          let write = FilesystemWrite.Custom({_,_,_,_,_,offset,_ in
+          let write = FSWrite.Custom({_,_,_,_,_,offset,_ in
               expect(offset).to.equal(5)
               return 0
           })
@@ -191,7 +191,7 @@ class FSSpec: Spec {
         it("executes the provided callback in the callback-hook") {
           let fs = FS(Loop.defaultLoop)
 
-          let write = FilesystemWrite.Custom({_,request,_,_,_,_,callback in
+          let write = FSWrite.Custom({_,request,_,_,_,_,callback in
               callback(request)
               return 0
           })
@@ -208,7 +208,7 @@ class FSSpec: Spec {
         it("returns .OK when uv_fs_open is successful") {
           let fs = FS(Loop.defaultLoop)
 
-          let write = FilesystemWrite.Custom({_,_,_,_,_,_,_ in
+          let write = FSWrite.Custom({_,_,_,_,_,_,_ in
               return 0
           })
 
@@ -219,7 +219,7 @@ class FSSpec: Spec {
           let code: Int32 = -1
           let fs = FS(Loop.defaultLoop)
 
-          let write = FilesystemWrite.Custom({_,_,_,_,_,_,_ in
+          let write = FSWrite.Custom({_,_,_,_,_,_,_ in
               return code
           })
 
