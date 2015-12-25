@@ -27,5 +27,16 @@ class BufferSpec: Spec {
           let _ = Buffer(bufferInit)
         }
       }
+
+      describe("size") {
+        it("returns the buffers lenth") {
+          let ref = UnsafePointer<UVBufferType>(UnsafeMutablePointer<UVBufferType>.alloc(sizeof(UVBufferType)))
+          let size = 10
+
+          let buffer = Buffer(ref, size)
+
+          expect(buffer.size).to.equal(size)
+        }
+      }
     }
 }
