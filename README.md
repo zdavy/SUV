@@ -46,4 +46,4 @@ Import SUV, write some code, and start the event loop.
   ```
 
 More Examples Can be found at the
-[SUVExamples](https://github.com/zachmokahn/SUVExamples) repo
+[SUVExamples](https://github.com/zachmokahn/SUVExamples/tree/0.0.4) repo
