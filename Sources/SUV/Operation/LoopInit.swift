@@ -1,5 +1,3 @@
-/* public var LoopInit: UVLoopInitOperation = UVLoopInit */
-
 public enum LoopInit {
   case UV
   case Custom(UVLoopInitOperation)

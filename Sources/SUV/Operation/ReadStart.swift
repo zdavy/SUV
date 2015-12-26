@@ -1,5 +1,3 @@
-/* public var ReadStart: UVReadStartOperation = UVReadStart */
-
 public enum ReadStart {
   case UV
   case Custom(UVReadStartOperation)

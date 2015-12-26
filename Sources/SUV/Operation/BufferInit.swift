@@ -1,5 +1,3 @@
-/* public var BufferInit: UVBufferInitOperation = UVBufferInit */
-
 public enum BufferInit {
   case UV
   case Custom(UVBufferInitOperation)

@@ -1,5 +1,3 @@
-/* public var TCPConnect: UVTCPConnectOperation = UVTCPConnect */
-
 public enum TCPConnect {
   case UV
   case Custom(UVTCPConnectOperation)

@@ -1,5 +1,3 @@
-/* public var IP4Addr: UVIP4AddrOperation = UVIP4Addr */
-
 public enum IP4Addr {
   case UV
   case Custom(UVIP4AddrOperation)

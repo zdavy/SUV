@@ -1,5 +1,3 @@
-/* public var TCPBind: UVTCPBindOperation = UVTCPBind */
-
 public enum TCPBind {
   case UV
   case Custom(UVTCPBindOperation)

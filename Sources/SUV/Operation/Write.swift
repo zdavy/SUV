@@ -1,5 +1,3 @@
-/* public var Write: UVWriteOperation = UVWrite */
-
 public enum Write {
   case UV
   case Custom(UVWriteOperation)

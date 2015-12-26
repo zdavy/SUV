@@ -1,5 +1,3 @@
-/* public var Run: UVRunOperation = UVRun */
-
 public enum Run {
   case UV
   case Custom(UVRunOperation)

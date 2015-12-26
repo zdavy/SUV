@@ -1,5 +1,3 @@
-/* public var Accept: UVAcceptOperation = UVAccept */
-
 public enum Accept {
   case UV
   case Custom(UVAcceptOperation)

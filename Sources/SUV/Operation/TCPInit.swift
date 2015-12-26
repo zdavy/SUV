@@ -1,5 +1,3 @@
-/* public var TCPInit: UVTCPInitOperation = UVTCPInit */
-
 public enum TCPInit {
   case UV
   case Custom(UVTCPInitOperation)

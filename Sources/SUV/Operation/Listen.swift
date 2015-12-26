@@ -1,5 +1,3 @@
-/* public var Listen: UVListenOperation = UVListen */
-
 public enum Listen {
   case UV
   case Custom(UVListenOperation)

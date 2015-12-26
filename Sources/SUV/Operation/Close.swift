@@ -1,5 +1,3 @@
-/* public var Close: UVCloseOperation = UVClose */
-
 public enum Close {
   case UV
   case Custom(UVCloseOperation)
