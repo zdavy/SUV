@@ -5,12 +5,12 @@ public class Buffer {
     return pointer.memory.len
   }
 
-  public init(_ pointer: UnsafePointer<UVBufferType>, _ size: Int, _ uv_buf_init: BufferInit = UVBufferInit) {
+  public init(_ pointer: UnsafePointer<UVBufferType>, _ size: Int, uv_buf_init: BufferInit = UVBufferInit) {
     self.pointer = UnsafeMutablePointer.alloc(size)
     self.pointer.memory = uv_buf_init(pointer.memory.base, UInt32(size))
   }
 
-  public init(_ uv_buf_init: BufferInit = UVBufferInit) {
+  public init(uv_buf_init: BufferInit = UVBufferInit) {
     self.pointer = UnsafeMutablePointer.alloc(sizeof(UVBufferType))
     self.pointer.memory = uv_buf_init(UnsafeMutablePointer<CChar>.alloc(sizeof(CChar)), UInt32(sizeof(CChar)))
   }

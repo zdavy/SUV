@@ -22,7 +22,7 @@ class FSRequestSpec: Spec {
             expect(request).to.equal(pointer)
           }
 
-          request.cleanup(cleanup)
+          request.cleanup(uv_fs_req_cleanup: cleanup)
         }
       }
 
@@ -48,7 +48,7 @@ class FSRequestSpec: Spec {
             return 0
           }
 
-          request.close(close)
+          request.close(uv_fs_close: close)
         }
 
         it("passes nil as the close callback by default") {
@@ -61,7 +61,7 @@ class FSRequestSpec: Spec {
             return 0
           }
 
-          request.close(close)
+          request.close(uv_fs_close: close)
         }
 
         it("executes the callback in the callback-hook if there is a callback provided") {
@@ -76,7 +76,7 @@ class FSRequestSpec: Spec {
 
           var callbackCalled = false
 
-          request.close(close) { _ in
+          request.close(uv_fs_close: close) { _ in
             callbackCalled = true
           }
 
@@ -90,7 +90,7 @@ class FSRequestSpec: Spec {
             return 0
           }
 
-          expect(request.close(close)).to.equal(.OK)
+          expect(request.close(uv_fs_close: close)).to.equal(.OK)
         }
 
         it("returns .Fail with the code if uv_fs_close is not successful") {
@@ -101,7 +101,7 @@ class FSRequestSpec: Spec {
             return code
           }
 
-          expect(request.close(close)).to.equal(.Fail(code))
+          expect(request.close(uv_fs_close: close)).to.equal(.Fail(code))
         }
 
         it("returns .OK if uv_fs_close is successful and there is a callback provided") {
@@ -111,7 +111,7 @@ class FSRequestSpec: Spec {
             return 0
           }
 
-          expect(request.close(close) { _ in }).to.equal(.OK)
+          expect(request.close(uv_fs_close: close) { _ in }).to.equal(.OK)
         }
 
         it("returns .Fail with the code if uv_fs_close is not successful and there is a callback provided") {
@@ -122,7 +122,7 @@ class FSRequestSpec: Spec {
             return code
           }
 
-          expect(request.close(close) { _ in }).to.equal(.Fail(code))
+          expect(request.close(uv_fs_close: close) { _ in }).to.equal(.Fail(code))
         }
       }
     }

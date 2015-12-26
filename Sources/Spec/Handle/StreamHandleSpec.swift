@@ -33,7 +33,7 @@ class StreamHandleSpec: Spec {
             return 0
           }
 
-          streamHandle.listen(listen) { _, _ in }
+          streamHandle.listen(uv_listen: listen) { _, _ in }
         }
 
         it("yields the max number of connections by default") {
@@ -44,7 +44,7 @@ class StreamHandleSpec: Spec {
             return 0
           }
 
-          streamHandle.listen(listen) { _, _ in }
+          streamHandle.listen(uv_listen: listen) { _, _ in }
         }
 
         it("yields the number of connections when provided") {
@@ -56,7 +56,7 @@ class StreamHandleSpec: Spec {
             return 0
           }
 
-          streamHandle.listen(listen, .Exactly(amount)) { _, _ in }
+          streamHandle.listen(uv_listen: listen, backlog: .Exactly(amount)) { _, _ in }
         }
 
         it("executes the provided callback in the ConnectionCallback") {
@@ -69,7 +69,7 @@ class StreamHandleSpec: Spec {
 
           var closeCallbackExecuted = false
 
-          streamHandle.listen(listen) { _, _ in
+          streamHandle.listen(uv_listen: listen) { _, _ in
             closeCallbackExecuted = true
           }
 
@@ -84,7 +84,7 @@ class StreamHandleSpec: Spec {
             return 0
           }
 
-          expect(streamHandle.listen(listen) { _,_ in }).to.equal(.OK)
+          expect(streamHandle.listen(uv_listen: listen) { _,_ in }).to.equal(.OK)
         }
 
         it("return .Fail with code when listen is not successful") {
@@ -96,7 +96,7 @@ class StreamHandleSpec: Spec {
             return code
           }
 
-          expect(streamHandle.listen(listen) { _,_ in }).to.equal(.Fail(code))
+          expect(streamHandle.listen(uv_listen: listen) { _,_ in }).to.equal(.Fail(code))
         }
       }
 
@@ -111,7 +111,7 @@ class StreamHandleSpec: Spec {
             return 0
           }
 
-          streamHandle.accept(connection, accept)
+          streamHandle.accept(connection, uv_accept: accept)
         }
 
         it("return .OK when accept is successful") {
@@ -122,7 +122,7 @@ class StreamHandleSpec: Spec {
             return 0
           }
 
-          expect(streamHandle.accept(connection, accept)).to.equal(.OK)
+          expect(streamHandle.accept(connection, uv_accept: accept)).to.equal(.OK)
         }
 
         it("return .Fail with code when listen is not successful") {
@@ -134,7 +134,7 @@ class StreamHandleSpec: Spec {
             return code
           }
 
-          expect(streamHandle.accept(connection, accept)).to.equal(.Fail(code))
+          expect(streamHandle.accept(connection, uv_accept: accept)).to.equal(.Fail(code))
         }
       }
 
@@ -147,7 +147,7 @@ class StreamHandleSpec: Spec {
             return 0
           }
 
-          streamHandle.read(readStart) { _,_,_ in }
+          streamHandle.read(uv_read_start: readStart) { _,_,_ in }
         }
 
         it("executes the provided callback in the onRead function") {
@@ -160,7 +160,7 @@ class StreamHandleSpec: Spec {
 
           var closeCallbackExecuted = false
 
-          streamHandle.read(readStart) { _,_,_ in
+          streamHandle.read(uv_read_start: readStart) { _,_,_ in
             closeCallbackExecuted = true
           }
 
@@ -175,7 +175,7 @@ class StreamHandleSpec: Spec {
             return 0
           }
 
-          expect(streamHandle.read(readStart) { _,_,_ in }).to.equal(.OK)
+          expect(streamHandle.read(uv_read_start: readStart) { _,_,_ in }).to.equal(.OK)
         }
 
         it("return .Fail with code when listen is not successful") {
@@ -186,7 +186,7 @@ class StreamHandleSpec: Spec {
             return code
           }
 
-          expect(streamHandle.read(readStart) { _,_,_ in }).to.equal(.Fail(code))
+          expect(streamHandle.read(uv_read_start: readStart) { _,_,_ in }).to.equal(.Fail(code))
         }
       }
 
@@ -198,7 +198,7 @@ class StreamHandleSpec: Spec {
             expect(handlePointer).to.equal(Handle(streamHandle).pointer)
           }
 
-          streamHandle.close(callback) { _ in }
+          streamHandle.close(uv_close: callback) { _ in }
         }
 
         it("executes the provided callback in the Close function") {
@@ -210,7 +210,7 @@ class StreamHandleSpec: Spec {
 
           var closeCallbackExecuted = false
 
-          streamHandle.close(callback) { _ in
+          streamHandle.close(uv_close: callback) { _ in
             closeCallbackExecuted = true
           }
 

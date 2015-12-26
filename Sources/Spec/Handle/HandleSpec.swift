@@ -32,7 +32,7 @@ class HandleSpec: Spec {
           expect(handlePointer).to.equal(handle.pointer)
         }
 
-        handle.close(callback) { _ in }
+        handle.close(uv_close: callback) { _ in }
       }
 
       it("executes the provided callback in the closeCallback") {
@@ -44,7 +44,7 @@ class HandleSpec: Spec {
 
         var closeCallbackExecuted = false
 
-        handle.close(callback) { _ in
+        handle.close(uv_close: callback) { _ in
           closeCallbackExecuted = true
         }
 

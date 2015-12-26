@@ -13,7 +13,7 @@ class LoopSpec: Spec {
             return 0
           }
 
-          let loop = Loop(loopInit)
+          let loop = Loop(uv_loop_init: loopInit)
           expect(pointer).to.equal(loop.pointer)
         }
 
@@ -22,7 +22,7 @@ class LoopSpec: Spec {
             return 0
           }
 
-          expect(Loop(loopInit).status).to.equal(.OK)
+          expect(Loop(uv_loop_init: loopInit).status).to.equal(.OK)
         }
 
         it("status is .Fail with code if LoopInit is not successful") {
@@ -32,7 +32,7 @@ class LoopSpec: Spec {
             return code
           }
 
-          expect(Loop(loopInit).status).to.equal(.Fail(code))
+          expect(Loop(uv_loop_init: loopInit).status).to.equal(.Fail(code))
         }
       }
 
@@ -76,7 +76,7 @@ class LoopSpec: Spec {
           return 0
         }
 
-        loop.run(mode, run)
+        loop.run(mode, uv_run: run)
       }
 
       it("returns .OK when Run is successful") {
@@ -84,7 +84,7 @@ class LoopSpec: Spec {
           return 0
         }
 
-        expect(Loop.defaultLoop.run(.Default, run)).to.equal(.OK)
+        expect(Loop.defaultLoop.run(.Default, uv_run: run)).to.equal(.OK)
       }
 
       it("returns .Fail with code when Run is not successful") {
@@ -94,7 +94,7 @@ class LoopSpec: Spec {
           return code
         }
 
-        expect(Loop.defaultLoop.run(.Default, run)).to.equal(.Fail(code))
+        expect(Loop.defaultLoop.run(.Default, uv_run: run)).to.equal(.Fail(code))
       }
     }
   }

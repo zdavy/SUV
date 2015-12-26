@@ -25,7 +25,7 @@ class FSSpec: Spec {
               return 0
           }
 
-          fs.open("test.txt", .ReadOnly, .Read(.User), open) { _ in }
+          fs.open("test.txt", .ReadOnly, .Read(.User), uv_fs_open: open) { _ in }
         }
 
         it("executes the provided callback in the callback-hook") {
@@ -38,7 +38,7 @@ class FSSpec: Spec {
 
           var callbackCalled = false
 
-          fs.open("test.txt", .ReadOnly, .Read(.User), open) { _ in
+          fs.open("test.txt", .ReadOnly, .Read(.User), uv_fs_open: open) { _ in
             callbackCalled = true
           }
 
@@ -52,7 +52,7 @@ class FSSpec: Spec {
               return 0
           }
 
-          expect(fs.open("test.txt", .ReadOnly, .Read(.User), open) { _ in }).to.equal(.OK)
+          expect(fs.open("test.txt", .ReadOnly, .Read(.User), uv_fs_open: open) { _ in }).to.equal(.OK)
         }
 
         it("returns .Fail with code when uv_fs_open is not successful") {
@@ -63,7 +63,7 @@ class FSSpec: Spec {
               return code
           }
 
-          expect(fs.open("test.txt", .ReadOnly, .Read(.User), open) { _ in }).to.equal(.Fail(code))
+          expect(fs.open("test.txt", .ReadOnly, .Read(.User), uv_fs_open: open) { _ in }).to.equal(.Fail(code))
         }
       }
 
@@ -84,7 +84,7 @@ class FSSpec: Spec {
               return 0
           }
 
-          fs.read(testFile, testBuffer, testSize, read) { _ in }
+          fs.read(testFile, testBuffer, testSize, uv_fs_read: read) { _ in }
         }
 
         it("defaults the offset to -1 when not provided") {
@@ -95,7 +95,7 @@ class FSSpec: Spec {
               return 0
           }
 
-          fs.read(File(UVFile()), Buffer(), 10, read) { _ in }
+          fs.read(File(UVFile()), Buffer(), 10, uv_fs_read: read) { _ in }
         }
 
         it("uses the given offset when provided") {
@@ -106,7 +106,7 @@ class FSSpec: Spec {
               return 0
           }
 
-          fs.read(File(UVFile()), Buffer(), 10, read, offset: 5) { _ in }
+          fs.read(File(UVFile()), Buffer(), 10, uv_fs_read: read, offset: 5) { _ in }
         }
 
         it("executes the provided callback in the callback-hook") {
@@ -119,7 +119,7 @@ class FSSpec: Spec {
 
           var callbackCalled = false
 
-          fs.read(File(UVFile(1)), Buffer(), 10, read) { _ in
+          fs.read(File(UVFile(1)), Buffer(), 10, uv_fs_read: read) { _ in
             callbackCalled = true
           }
 
@@ -133,7 +133,7 @@ class FSSpec: Spec {
               return 0
           }
 
-          expect(fs.read(File(UVFile(1)), Buffer(), 10, read) { _ in }).to.equal(.OK)
+          expect(fs.read(File(UVFile(1)), Buffer(), 10, uv_fs_read: read) { _ in }).to.equal(.OK)
         }
 
         it("returns .Fail with code when uv_fs_read is not successful") {
@@ -144,7 +144,7 @@ class FSSpec: Spec {
               return code
           }
 
-          expect(fs.read(File(UVFile(1)), Buffer(), 10, read) { _ in }).to.equal(.Fail(code))
+          expect(fs.read(File(UVFile(1)), Buffer(), 10, uv_fs_read: read) { _ in }).to.equal(.Fail(code))
         }
       }
 
@@ -163,7 +163,7 @@ class FSSpec: Spec {
               return 0
           }
 
-          fs.write(.STDOUT, testBuffer, testSize, write) { _ in }
+          fs.write(.STDOUT, testBuffer, testSize, uv_fs_write: write) { _ in }
         }
 
         it("defaults the offset to -1 when not provided") {
@@ -174,7 +174,7 @@ class FSSpec: Spec {
               return 0
           }
 
-          fs.write(.STDOUT, Buffer(), 10, write) { _ in }
+          fs.write(.STDOUT, Buffer(), 10, uv_fs_write: write) { _ in }
         }
 
         it("uses the given offset when provided") {
@@ -185,7 +185,7 @@ class FSSpec: Spec {
               return 0
           }
 
-          fs.write(.STDOUT, Buffer(), 10, write, offset: 5) { _ in }
+          fs.write(.STDOUT, Buffer(), 10, uv_fs_write: write, offset: 5) { _ in }
         }
 
         it("executes the provided callback in the callback-hook") {
@@ -198,7 +198,7 @@ class FSSpec: Spec {
 
           var callbackCalled = false
 
-          fs.write(.STDOUT, Buffer(), 10, write) { _ in
+          fs.write(.STDOUT, Buffer(), 10, uv_fs_write: write) { _ in
             callbackCalled = true
           }
 
@@ -212,7 +212,7 @@ class FSSpec: Spec {
               return 0
           }
 
-          expect(fs.write(.STDOUT, Buffer(), 10, write) { _ in }).to.equal(.OK)
+          expect(fs.write(.STDOUT, Buffer(), 10, uv_fs_write: write) { _ in }).to.equal(.OK)
         }
 
         it("returns .Fail with code when uv_fs_open is not successful") {
@@ -223,7 +223,7 @@ class FSSpec: Spec {
               return code
           }
 
-          expect(fs.write(.STDOUT, Buffer(), 10, write) { _ in }).to.equal(.Fail(code))
+          expect(fs.write(.STDOUT, Buffer(), 10, uv_fs_write: write) { _ in }).to.equal(.Fail(code))
         }
       }
     }
