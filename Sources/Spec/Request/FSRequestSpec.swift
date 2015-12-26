@@ -18,9 +18,9 @@ class FSRequestSpec: Spec {
           let pointer = UnsafeMutablePointer<UVFSType>.alloc(sizeof(UVFSType))
           let request = FSRequest(pointer)
 
-          let cleanup = FSRequestCleanup.Custom({ request in
+          let cleanup: UVFSRequestCleanupOperation = { request in
             expect(request).to.equal(pointer)
-          })
+          }
 
           request.cleanup(cleanup)
         }
@@ -40,13 +40,13 @@ class FSRequestSpec: Spec {
           let pointer = UnsafeMutablePointer<UVFSType>.alloc(sizeof(UVFSType))
           let request = FSRequest(pointer)
 
-          let close = FSClose.Custom({ loop, closeRequest, file, _ in
+          let close: UVFSCloseOperation = { loop, closeRequest, file, _ in
             expect(closeRequest).notTo.equal(pointer)
             expect(loop).to.equal(request.loop.pointer)
             expect(file).to.equal(request.result.ref)
 
             return 0
-          })
+          }
 
           request.close(close)
         }
@@ -55,11 +55,11 @@ class FSRequestSpec: Spec {
           let pointer = UnsafeMutablePointer<UVFSType>.alloc(sizeof(UVFSType))
           let request = FSRequest(pointer)
 
-          let close = FSClose.Custom({ _,_,_, callback in
+          let close: UVFSCloseOperation = { _,_,_, callback in
             expect(callback == nil).to.equal(true)
 
             return 0
-          })
+          }
 
           request.close(close)
         }
@@ -68,11 +68,11 @@ class FSRequestSpec: Spec {
           let pointer = UnsafeMutablePointer<UVFSType>.alloc(sizeof(UVFSType))
           let request = FSRequest(pointer)
 
-          let close = FSClose.Custom({ _,request,_, callback in
+          let close: UVFSCloseOperation = { _,request,_, callback in
             callback(request)
 
             return 0
-          })
+          }
 
           var callbackCalled = false
 
@@ -86,9 +86,9 @@ class FSRequestSpec: Spec {
         it("returns .OK if uv_fs_close is successful") {
           let request = FSRequest(UnsafeMutablePointer<UVFSType>.alloc(sizeof(UVFSType)))
 
-          let close = FSClose.Custom({ _,_,_,_ in
+          let close: UVFSCloseOperation = { _,_,_,_ in
             return 0
-          })
+          }
 
           expect(request.close(close)).to.equal(.OK)
         }
@@ -97,9 +97,9 @@ class FSRequestSpec: Spec {
           let code: Int32 = -1
           let request = FSRequest(UnsafeMutablePointer<UVFSType>.alloc(sizeof(UVFSType)))
 
-          let close = FSClose.Custom({ _,_,_,_ in
+          let close: UVFSCloseOperation = { _,_,_,_ in
             return code
-          })
+          }
 
           expect(request.close(close)).to.equal(.Fail(code))
         }
@@ -107,9 +107,9 @@ class FSRequestSpec: Spec {
         it("returns .OK if uv_fs_close is successful and there is a callback provided") {
           let request = FSRequest(UnsafeMutablePointer<UVFSType>.alloc(sizeof(UVFSType)))
 
-          let close = FSClose.Custom({ _,_,_,_ in
+          let close: UVFSCloseOperation = { _,_,_,_ in
             return 0
-          })
+          }
 
           expect(request.close(close) { _ in }).to.equal(.OK)
         }
@@ -118,9 +118,9 @@ class FSRequestSpec: Spec {
           let code: Int32 = -1
           let request = FSRequest(UnsafeMutablePointer<UVFSType>.alloc(sizeof(UVFSType)))
 
-          let close = FSClose.Custom({ _,_,_,_ in
+          let close: UVFSCloseOperation = { _,_,_,_ in
             return code
-          })
+          }
 
           expect(request.close(close) { _ in }).to.equal(.Fail(code))
         }

@@ -10,10 +10,10 @@ public class WriteRequest {
     self.pointer = pointer
   }
 
-  public func write(stream: StreamHandle, _ buffer: Buffer, _ uv_write: Write = .UV, callback: (WriteRequest, Status) -> Void) -> Status {
+  public func write(stream: StreamHandle, _ buffer: Buffer, _ uv_write: UVWriteOperation = UVWrite, callback: (WriteRequest, Status) -> Void) -> Status {
     self.pointer.memory.data = Cast.toVoid(callback)
 
-    return Status(uv_write.call(pointer, stream.pointer, buffer.pointer, 1) { request, status in
+    return Status(uv_write(pointer, stream.pointer, buffer.pointer, 1) { request, status in
       let callback: (WriteRequest, Status) -> Void = Cast.fromVoid(request.memory.data)!
       callback(WriteRequest(request), Status(status))
     })

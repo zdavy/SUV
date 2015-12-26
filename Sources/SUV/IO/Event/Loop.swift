@@ -6,9 +6,9 @@ public class Loop {
   public let pointer: Pointer
   public let status: Status
 
-  public init(_ uv_loop_init: LoopInit = .UV) {
+  public init(_ uv_loop_init: UVLoopInitOperation = UVLoopInit) {
     self.pointer = Pointer.alloc(sizeof(UVLoopType))
-    self.status = Status(uv_loop_init.call(self.pointer))
+    self.status = Status(uv_loop_init(self.pointer))
   }
 
   public init(_ pointer: Pointer) {
@@ -16,7 +16,7 @@ public class Loop {
     self.status = .OK
   }
 
-  public func run(runMode: RunMode, _ uv_run: Run = .UV) -> Status {
-    return Status(uv_run.call(self.pointer, runMode.value))
+  public func run(runMode: RunMode, _ uv_run: UVRunOperation = UVRun) -> Status {
+    return Status(uv_run(self.pointer, runMode.value))
   }
 }

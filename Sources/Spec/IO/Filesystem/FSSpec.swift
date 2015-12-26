@@ -15,7 +15,7 @@ class FSSpec: Spec {
           let testPath = "test.txt"
           let fs = FS(Loop.defaultLoop)
 
-          let open = FSOpen.Custom({loop, request, path, access, mode, _ in
+          let open: UVFSOpenOperation = {loop, request, path, access, mode, _ in
               expect(loop).to.equal(Loop.defaultLoop.pointer)
               expect(request).to.equal(fs.pointer)
               expect(String.fromCString(path)).to.equal(testPath)
@@ -23,7 +23,7 @@ class FSSpec: Spec {
               expect(mode).to.equal(Mode.Read(.User).flag)
 
               return 0
-          })
+          }
 
           fs.open("test.txt", .ReadOnly, .Read(.User), open) { _ in }
         }
@@ -31,10 +31,10 @@ class FSSpec: Spec {
         it("executes the provided callback in the callback-hook") {
           let fs = FS(Loop.defaultLoop)
 
-          let open = FSOpen.Custom({_, request, _,_,_, callback in
+          let open: UVFSOpenOperation = {_, request, _,_,_, callback in
               callback(request)
               return 0
-          })
+          }
 
           var callbackCalled = false
 
@@ -48,9 +48,9 @@ class FSSpec: Spec {
         it("returns .OK when uv_fs_open is successful") {
           let fs = FS(Loop.defaultLoop)
 
-          let open = FSOpen.Custom({ _,_,_,_,_,_ in
+          let open: UVFSOpenOperation = { _,_,_,_,_,_ in
               return 0
-          })
+          }
 
           expect(fs.open("test.txt", .ReadOnly, .Read(.User), open) { _ in }).to.equal(.OK)
         }
@@ -59,9 +59,9 @@ class FSSpec: Spec {
           let code: Int32 = -1
           let fs = FS(Loop.defaultLoop)
 
-          let open = FSOpen.Custom({ _,_,_,_,_,_ in
+          let open: UVFSOpenOperation = { _,_,_,_,_,_ in
               return code
-          })
+          }
 
           expect(fs.open("test.txt", .ReadOnly, .Read(.User), open) { _ in }).to.equal(.Fail(code))
         }
@@ -74,7 +74,7 @@ class FSSpec: Spec {
           let testBuffer = Buffer()
           let testSize = 10
 
-          let read = FSRead.Custom({loop, request, file, buffer, size,_,_ in
+          let read: UVFSReadOperation = {loop, request, file, buffer, size,_,_ in
               expect(loop).to.equal(Loop.defaultLoop.pointer)
               expect(request).to.equal(fs.pointer)
               expect(file).to.equal(testFile.ref)
@@ -82,7 +82,7 @@ class FSSpec: Spec {
               expect(size).to.equal(UInt32(testSize))
 
               return 0
-          })
+          }
 
           fs.read(testFile, testBuffer, testSize, read) { _ in }
         }
@@ -90,10 +90,10 @@ class FSSpec: Spec {
         it("defaults the offset to -1 when not provided") {
           let fs = FS(Loop.defaultLoop)
 
-          let read = FSRead.Custom({ _,_,_,_,_, offset,_ in
+          let read: UVFSReadOperation = { _,_,_,_,_, offset,_ in
               expect(offset).to.equal(-1)
               return 0
-          })
+          }
 
           fs.read(File(UVFile()), Buffer(), 10, read) { _ in }
         }
@@ -101,10 +101,10 @@ class FSSpec: Spec {
         it("uses the given offset when provided") {
           let fs = FS(Loop.defaultLoop)
 
-          let read = FSRead.Custom({ _,_,_,_,_, offset,_ in
+          let read: UVFSReadOperation = { _,_,_,_,_, offset,_ in
               expect(offset).to.equal(5)
               return 0
-          })
+          }
 
           fs.read(File(UVFile()), Buffer(), 10, read, offset: 5) { _ in }
         }
@@ -112,10 +112,10 @@ class FSSpec: Spec {
         it("executes the provided callback in the callback-hook") {
           let fs = FS(Loop.defaultLoop)
 
-          let read = FSRead.Custom({_,request,_,_,_,_, callback in
+          let read: UVFSReadOperation = {_,request,_,_,_,_, callback in
               callback(request)
               return 0
-          })
+          }
 
           var callbackCalled = false
 
@@ -129,9 +129,9 @@ class FSSpec: Spec {
         it("returns .OK when uv_fs_read is successful") {
           let fs = FS(Loop.defaultLoop)
 
-          let read = FSRead.Custom({_,_,_,_,_,_,_ in
+          let read: UVFSReadOperation = {_,_,_,_,_,_,_ in
               return 0
-          })
+          }
 
           expect(fs.read(File(UVFile(1)), Buffer(), 10, read) { _ in }).to.equal(.OK)
         }
@@ -140,9 +140,9 @@ class FSSpec: Spec {
           let code: Int32 = -1
           let fs = FS(Loop.defaultLoop)
 
-          let read = FSRead.Custom({_,_,_,_,_,_,_ in
+          let read: UVFSReadOperation = {_,_,_,_,_,_,_ in
               return code
-          })
+          }
 
           expect(fs.read(File(UVFile(1)), Buffer(), 10, read) { _ in }).to.equal(.Fail(code))
         }
@@ -154,14 +154,14 @@ class FSSpec: Spec {
           let testBuffer = Buffer()
           let testSize = 10
 
-          let write = FSWrite.Custom({loop, request, output, buffer, size,_,_ in
+          let write: UVFSWriteOperation = {loop, request, output, buffer, size,_,_ in
               expect(loop).to.equal(Loop.defaultLoop.pointer)
               expect(request).to.equal(fs.pointer)
               expect(output).to.equal(FileDescriptor.STDOUT.flag)
               expect(buffer).to.equal(testBuffer.pointer)
               expect(size).to.equal(UInt32(testSize))
               return 0
-          })
+          }
 
           fs.write(.STDOUT, testBuffer, testSize, write) { _ in }
         }
@@ -169,10 +169,10 @@ class FSSpec: Spec {
         it("defaults the offset to -1 when not provided") {
           let fs = FS(Loop.defaultLoop)
 
-          let write = FSWrite.Custom({_,_,_,_,_,offset,_ in
+          let write: UVFSWriteOperation = {_,_,_,_,_,offset,_ in
               expect(offset).to.equal(-1)
               return 0
-          })
+          }
 
           fs.write(.STDOUT, Buffer(), 10, write) { _ in }
         }
@@ -180,10 +180,10 @@ class FSSpec: Spec {
         it("uses the given offset when provided") {
           let fs = FS(Loop.defaultLoop)
 
-          let write = FSWrite.Custom({_,_,_,_,_,offset,_ in
+          let write: UVFSWriteOperation = {_,_,_,_,_,offset,_ in
               expect(offset).to.equal(5)
               return 0
-          })
+          }
 
           fs.write(.STDOUT, Buffer(), 10, write, offset: 5) { _ in }
         }
@@ -191,10 +191,10 @@ class FSSpec: Spec {
         it("executes the provided callback in the callback-hook") {
           let fs = FS(Loop.defaultLoop)
 
-          let write = FSWrite.Custom({_,request,_,_,_,_,callback in
+          let write: UVFSWriteOperation = {_,request,_,_,_,_,callback in
               callback(request)
               return 0
-          })
+          }
 
           var callbackCalled = false
 
@@ -208,9 +208,9 @@ class FSSpec: Spec {
         it("returns .OK when uv_fs_open is successful") {
           let fs = FS(Loop.defaultLoop)
 
-          let write = FSWrite.Custom({_,_,_,_,_,_,_ in
+          let write: UVFSWriteOperation = {_,_,_,_,_,_,_ in
               return 0
-          })
+          }
 
           expect(fs.write(.STDOUT, Buffer(), 10, write) { _ in }).to.equal(.OK)
         }
@@ -219,9 +219,9 @@ class FSSpec: Spec {
           let code: Int32 = -1
           let fs = FS(Loop.defaultLoop)
 
-          let write = FSWrite.Custom({_,_,_,_,_,_,_ in
+          let write: UVFSWriteOperation = {_,_,_,_,_,_,_ in
               return code
-          })
+          }
 
           expect(fs.write(.STDOUT, Buffer(), 10, write) { _ in }).to.equal(.Fail(code))
         }

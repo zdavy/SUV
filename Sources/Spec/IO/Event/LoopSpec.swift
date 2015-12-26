@@ -8,19 +8,19 @@ class LoopSpec: Spec {
         it("initializes an event loop via LoopInit") {
           var pointer: UnsafeMutablePointer<UVLoopType>! = nil
 
-          let loopInit = LoopInit.Custom({ loopPointer in
+          let loopInit: UVLoopInitOperation = { loopPointer in
             pointer = loopPointer
             return 0
-          })
+          }
 
           let loop = Loop(loopInit)
           expect(pointer).to.equal(loop.pointer)
         }
 
         it("status is .OK if LoopInit is successful") {
-          let loopInit = LoopInit.Custom({ _ in
+          let loopInit: UVLoopInitOperation = { _ in
             return 0
-          })
+          }
 
           expect(Loop(loopInit).status).to.equal(.OK)
         }
@@ -28,9 +28,9 @@ class LoopSpec: Spec {
         it("status is .Fail with code if LoopInit is not successful") {
           let code: Int32 = -1
 
-          let loopInit = LoopInit.Custom({ _ in
+          let loopInit: UVLoopInitOperation = { _ in
             return code
-          })
+          }
 
           expect(Loop(loopInit).status).to.equal(.Fail(code))
         }
@@ -70,19 +70,19 @@ class LoopSpec: Spec {
         let loop = Loop.defaultLoop
         let mode: RunMode = .Default
 
-        let run = Run.Custom({ loopPointer, modeValue in
+        let run: UVRunOperation = { loopPointer, modeValue in
           expect(loopPointer).to.equal(loop.pointer)
           expect(modeValue).to.equal(mode.value)
           return 0
-        })
+        }
 
         loop.run(mode, run)
       }
 
       it("returns .OK when Run is successful") {
-        let run = Run.Custom({ _, _ in
+        let run: UVRunOperation = { _, _ in
           return 0
-        })
+        }
 
         expect(Loop.defaultLoop.run(.Default, run)).to.equal(.OK)
       }
@@ -90,9 +90,9 @@ class LoopSpec: Spec {
       it("returns .Fail with code when Run is not successful") {
         let code: Int32 = -1
 
-        let run = Run.Custom({ _, _ in
+        let run: UVRunOperation = { _, _ in
           return code
-        })
+        }
 
         expect(Loop.defaultLoop.run(.Default, run)).to.equal(.Fail(code))
       }

@@ -14,29 +14,29 @@ public class StreamHandle: HandleType {
     self.loop = Loop(pointer.memory.loop)
   }
 
-  public func listen(uv_listen: Listen = .UV, _ backlog: Backlog = .Max, callback: (StreamHandle, Status) -> Void) -> Status {
+  public func listen(uv_listen: UVListenOperation = UVListen, _ backlog: Backlog = .Max, callback: (StreamHandle, Status) -> Void) -> Status {
     self.pointer.memory.data = Cast.toVoid(callback)
 
-    return Status(uv_listen.call(self.pointer, backlog.amount) { stream, status in
+    return Status(uv_listen(self.pointer, backlog.amount) { stream, status in
       let callback: (StreamHandle, Status) -> Void = Cast.fromVoid(stream.memory.data)!
       callback(StreamHandle(stream), Status(status))
     })
   }
 
-  public func accept(input: StreamHandle, _ uv_accept: Accept = .UV) -> Status {
-    return Status(uv_accept.call(input.pointer, self.pointer))
+  public func accept(input: StreamHandle, _ uv_accept: UVAcceptOperation = UVAccept) -> Status {
+    return Status(uv_accept(input.pointer, self.pointer))
   }
 
-  public func read(uv_read_start: ReadStart = .UV, alloc: OnAlloc = .Default, callback: (StreamHandle, Int, Buffer) -> Void) -> Status {
+  public func read(uv_read_start: UVReadStartOperation = UVReadStart, alloc: OnAlloc = .Default, callback: (StreamHandle, Int, Buffer) -> Void) -> Status {
     self.pointer.memory.data = Cast.toVoid(callback)
 
-    return Status(uv_read_start.call(self.pointer, alloc.callback) { client, size, buffer in
+    return Status(uv_read_start(self.pointer, alloc.callback) { client, size, buffer in
       let callback: (StreamHandle, Int, Buffer) -> Void = Cast.fromVoid(client.memory.data)!
       callback(StreamHandle(client), size, Buffer(buffer, size))
     })
   }
 
-  public func close(uv_close: Close = .UV, _ callback: (Handle -> Void)) {
+  public func close(uv_close: UVCloseOperation = UVClose, _ callback: (Handle -> Void)) {
     Handle(self).close(uv_close) { callback($0) }
   }
 }

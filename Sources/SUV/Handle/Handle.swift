@@ -14,10 +14,10 @@ public class Handle: HandleType {
     self.loop = Loop(pointer.memory.loop)
   }
 
-  public func close(uv_close: Close = .UV, _ callback: (Handle) -> Void) {
+  public func close(uv_close: UVCloseOperation = UVClose, _ callback: (Handle) -> Void) {
     self.pointer.memory.data = Cast.toVoid(callback)
 
-    uv_close.call(self.pointer) { handle in
+    uv_close(self.pointer) { handle in
       let callback: (Handle) -> Void = Cast.fromVoid(handle.memory.data)!
       callback(Handle(handle))
     }
