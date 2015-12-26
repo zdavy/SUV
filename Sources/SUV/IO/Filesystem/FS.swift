@@ -9,7 +9,7 @@ public class FS {
     self.pointer = Pointer.alloc(sizeof(UVFSType))
   }
 
-  public func open(filepath: String, _ access: Access, _ mode: Mode, _ uv_fs_open: UVFSOpenOperation = UVFSOpen, _ callback: (FSRequest) -> Void) -> Status {
+  public func open(filepath: String, _ access: Access, _ mode: Mode, _ uv_fs_open: FSOpen = UVFSOpen, _ callback: (FSRequest) -> Void) -> Status {
     pointer.memory.data = Cast.toVoid(callback)
 
     return Status(uv_fs_open(loop.pointer, self.pointer, filepath, access.flag, mode.flag) { request in
@@ -18,7 +18,7 @@ public class FS {
     })
   }
 
-  public func read(file: File, _ buffer: Buffer, _ size: Int, _ uv_fs_read: UVFSReadOperation = UVFSRead, offset: Int = -1, _ callback: (FSRequest) -> Void) -> Status {
+  public func read(file: File, _ buffer: Buffer, _ size: Int, _ uv_fs_read: FSRead = UVFSRead, offset: Int = -1, _ callback: (FSRequest) -> Void) -> Status {
     pointer.memory.data = Cast.toVoid(callback)
 
     buffer.pointer.memory.len = size
@@ -29,7 +29,7 @@ public class FS {
     })
   }
 
-  public func write(output: FileDescriptor, _ buffer: Buffer, _ size: Int, _ uv_fs_write: UVFSWriteOperation = UVFSWrite, offset: Int = -1, _ callback: (FSRequest) -> Void) -> Status {
+  public func write(output: FileDescriptor, _ buffer: Buffer, _ size: Int, _ uv_fs_write: FSWrite = UVFSWrite, offset: Int = -1, _ callback: (FSRequest) -> Void) -> Status {
     pointer.memory.data = Cast.toVoid(callback)
 
     buffer.pointer.memory.len = size

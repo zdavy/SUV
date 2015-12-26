@@ -7,7 +7,7 @@ class AddrInSpec: Spec {
         it("passes the pointer and provided host & port to IP4Addr") {
           var addrinPointer: UnsafeMutablePointer<SockAddrIn> = nil
 
-          let ip4Addr: UVIP4AddrOperation = { host, port, pointer in
+          let ip4Addr: IP4Addr = { host, port, pointer in
             expect(String.fromCString(host)).to.equal("host")
             expect(port).to.equal(1000)
             addrinPointer = pointer
@@ -19,7 +19,7 @@ class AddrInSpec: Spec {
         }
 
         it("status is .OK if IP4Addr is successful") {
-          let ip4Addr: UVIP4AddrOperation = { _,_,_ in
+          let ip4Addr: IP4Addr = { _,_,_ in
             return 0
           }
 
@@ -29,7 +29,7 @@ class AddrInSpec: Spec {
         it("status is .Fail with code if IP4Addr is not successful") {
           let code: Int32 = -1
 
-          let ip4Addr: UVIP4AddrOperation = { _,_,_ in
+          let ip4Addr: IP4Addr = { _,_,_ in
             return code
           }
 

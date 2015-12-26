@@ -28,7 +28,7 @@ class HandleSpec: Spec {
       it("yields the handle pointer to the Close function") {
         let handle = Handle(MockHandleType())
 
-        let callback: UVCloseOperation = { handlePointer, callback in
+        let callback: Close = { handlePointer, callback in
           expect(handlePointer).to.equal(handle.pointer)
         }
 
@@ -38,7 +38,7 @@ class HandleSpec: Spec {
       it("executes the provided callback in the closeCallback") {
         let handle = Handle(MockHandleType())
 
-        let callback: UVCloseOperation = { handlePointer, callback in
+        let callback: Close = { handlePointer, callback in
           callback(handlePointer)
         }
 

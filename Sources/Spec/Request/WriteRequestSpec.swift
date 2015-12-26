@@ -18,7 +18,7 @@ class WriteRequestSpec: Spec {
           let stream = StreamHandle(MockHandleType())
           let buffer = Buffer()
 
-          let write: UVWriteOperation = { writeRequestPointer, streamPointer, bufferPointer, _, _ in
+          let write: Write = { writeRequestPointer, streamPointer, bufferPointer, _, _ in
             expect(writeRequestPointer).to.equal(writeRequest.pointer)
             expect(streamPointer).to.equal(stream.pointer)
             expect(bufferPointer).to.equal(buffer.pointer)
@@ -33,7 +33,7 @@ class WriteRequestSpec: Spec {
           let stream = StreamHandle(MockHandleType())
           let buffer = Buffer()
 
-          let write: UVWriteOperation = { _, _, _, _, _ in
+          let write: Write = { _, _, _, _, _ in
             return 0
           }
 
@@ -46,7 +46,7 @@ class WriteRequestSpec: Spec {
           let stream = StreamHandle(MockHandleType())
           let buffer = Buffer()
 
-          let write: UVWriteOperation = { _, _, _, _, _ in
+          let write: Write = { _, _, _, _, _ in
             return code
           }
 
@@ -58,7 +58,7 @@ class WriteRequestSpec: Spec {
           let stream = StreamHandle(MockHandleType())
           let buffer = Buffer()
 
-          let write: UVWriteOperation = { pointer, _, _, _, writeCallback in
+          let write: Write = { pointer, _, _, _, writeCallback in
             writeCallback(pointer, 0)
             return 0
           }

@@ -8,7 +8,7 @@ class TCPHandleSpec: Spec {
           var loop: UnsafeMutablePointer<UVLoopType>! = nil
           var tcp: UnsafeMutablePointer<UVTCPType>! = nil
 
-          let tcpInit: UVTCPInitOperation = { loopPointer, tcpPointer in
+          let tcpInit: TCPInit = { loopPointer, tcpPointer in
             loop = loopPointer
             tcp = tcpPointer
             return 0
@@ -21,7 +21,7 @@ class TCPHandleSpec: Spec {
         }
 
         it("sets status to .OK if TCPInit is successful") {
-          let tcpInit: UVTCPInitOperation = { _, _ in
+          let tcpInit: TCPInit = { _, _ in
             return 0
           }
 
@@ -32,7 +32,7 @@ class TCPHandleSpec: Spec {
         it("sets status to .Fail with code if TCPInit is not successful") {
           let code: Int32 = -1
 
-          let tcpInit: UVTCPInitOperation = { _, _ in
+          let tcpInit: TCPInit = { _, _ in
             return code
           }
 
@@ -43,14 +43,14 @@ class TCPHandleSpec: Spec {
 
       describe("bind") {
         it("passes the pointer and the provided addr to TCPBind") {
-          let tcpInit: UVTCPInitOperation = { _,_ in
+          let tcpInit: TCPInit = { _,_ in
             return 0
           }
 
           let tcpHandle = TCPHandle(Loop.defaultLoop, tcpInit)
           let addr = Addr(AddrIn("0.0.0.0", 9999))
 
-          let tcpBind: UVTCPBindOperation = { tcpHandlePointer, addrPointer, _ in
+          let tcpBind: TCPBind = { tcpHandlePointer, addrPointer, _ in
             expect(tcpHandlePointer).to.equal(tcpHandle.pointer)
             expect(addrPointer).to.equal(addr.pointer)
             return 0
@@ -60,14 +60,14 @@ class TCPHandleSpec: Spec {
         }
 
         it("passes the .AF address family by default") {
-          let tcpInit: UVTCPInitOperation = { _,_ in
+          let tcpInit: TCPInit = { _,_ in
             return 0
           }
 
           let tcpHandle = TCPHandle(Loop.defaultLoop, tcpInit)
           let addr = Addr(AddrIn("0.0.0.0", 9999))
 
-          let tcpBind: UVTCPBindOperation = { _, _, addressFamily in
+          let tcpBind: TCPBind = { _, _, addressFamily in
             expect(addressFamily).to.equal(INet.AF.family)
             return 0
           }
@@ -76,7 +76,7 @@ class TCPHandleSpec: Spec {
         }
 
         it("passes the provided address family") {
-          let tcpInit: UVTCPInitOperation = { _,_ in
+          let tcpInit: TCPInit = { _,_ in
             return 0
           }
 
@@ -85,7 +85,7 @@ class TCPHandleSpec: Spec {
           let tcpHandle = TCPHandle(Loop.defaultLoop, tcpInit)
           let addr = Addr(AddrIn("0.0.0.0", 9999))
 
-          let tcpBind: UVTCPBindOperation = {_, _, addressFamily in
+          let tcpBind: TCPBind = {_, _, addressFamily in
             expect(addressFamily).to.equal(providedAddressFamily.family)
             return 0
           }
@@ -94,14 +94,14 @@ class TCPHandleSpec: Spec {
         }
 
         it("returns .OK if the TCPBind is sucessful") {
-          let tcpInit: UVTCPInitOperation = { _,_ in
+          let tcpInit: TCPInit = { _,_ in
             return 0
           }
 
           let tcpHandle = TCPHandle(Loop.defaultLoop, tcpInit)
           let addr = Addr(AddrIn("0.0.0.0", 9999))
 
-          let tcpBind: UVTCPBindOperation = {_,_,_ in
+          let tcpBind: TCPBind = {_,_,_ in
             return 0
           }
 
@@ -111,14 +111,14 @@ class TCPHandleSpec: Spec {
         it("returns .Fail with the status code if the TCPBind is not sucessful") {
           let code: Int32 = -1
 
-          let tcpInit: UVTCPInitOperation = { _,_ in
+          let tcpInit: TCPInit = { _,_ in
             return 0
           }
 
           let tcpHandle = TCPHandle(Loop.defaultLoop, tcpInit)
           let addr = Addr(AddrIn("0.0.0.0", 9999))
 
-          let tcpBind: UVTCPBindOperation = {_,_,_ in
+          let tcpBind: TCPBind = {_,_,_ in
             return code
           }
 
@@ -128,13 +128,13 @@ class TCPHandleSpec: Spec {
 
       describe("close") {
         it("creates a handle from itself and executes close") {
-          let tcpInit: UVTCPInitOperation = { _,_ in
+          let tcpInit: TCPInit = { _,_ in
             return 0
           }
 
           let tcpHandle = TCPHandle(Loop.defaultLoop, tcpInit)
 
-          let callback: UVCloseOperation = { handlePointer, _ in
+          let callback: Close = { handlePointer, _ in
             expect(handlePointer).to.equal(Handle(tcpHandle).pointer)
           }
 
@@ -142,13 +142,13 @@ class TCPHandleSpec: Spec {
         }
 
         it("executes the provided callback in the Close function") {
-          let tcpInit: UVTCPInitOperation = { _,_ in
+          let tcpInit: TCPInit = { _,_ in
             return 0
           }
 
           let tcpHandle = TCPHandle(Loop.defaultLoop, tcpInit)
 
-          let callback: UVCloseOperation = { handlePointer, closeCallback in
+          let callback: Close = { handlePointer, closeCallback in
             closeCallback(handlePointer)
           }
 

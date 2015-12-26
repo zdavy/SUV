@@ -8,7 +8,7 @@ class LoopSpec: Spec {
         it("initializes an event loop via LoopInit") {
           var pointer: UnsafeMutablePointer<UVLoopType>! = nil
 
-          let loopInit: UVLoopInitOperation = { loopPointer in
+          let loopInit: LoopInit = { loopPointer in
             pointer = loopPointer
             return 0
           }
@@ -18,7 +18,7 @@ class LoopSpec: Spec {
         }
 
         it("status is .OK if LoopInit is successful") {
-          let loopInit: UVLoopInitOperation = { _ in
+          let loopInit: LoopInit = { _ in
             return 0
           }
 
@@ -28,7 +28,7 @@ class LoopSpec: Spec {
         it("status is .Fail with code if LoopInit is not successful") {
           let code: Int32 = -1
 
-          let loopInit: UVLoopInitOperation = { _ in
+          let loopInit: LoopInit = { _ in
             return code
           }
 
@@ -70,7 +70,7 @@ class LoopSpec: Spec {
         let loop = Loop.defaultLoop
         let mode: RunMode = .Default
 
-        let run: UVRunOperation = { loopPointer, modeValue in
+        let run: Run = { loopPointer, modeValue in
           expect(loopPointer).to.equal(loop.pointer)
           expect(modeValue).to.equal(mode.value)
           return 0
@@ -80,7 +80,7 @@ class LoopSpec: Spec {
       }
 
       it("returns .OK when Run is successful") {
-        let run: UVRunOperation = { _, _ in
+        let run: Run = { _, _ in
           return 0
         }
 
@@ -90,7 +90,7 @@ class LoopSpec: Spec {
       it("returns .Fail with code when Run is not successful") {
         let code: Int32 = -1
 
-        let run: UVRunOperation = { _, _ in
+        let run: Run = { _, _ in
           return code
         }
 

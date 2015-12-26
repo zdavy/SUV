@@ -13,11 +13,11 @@ public class FSRequest {
     self.loop = Loop(pointer.memory.loop)
   }
 
-  public func cleanup(uv_fs_req_cleanup: UVFSRequestCleanupOperation = UVFSRequestCleanup) {
+  public func cleanup(uv_fs_req_cleanup: FSRequestCleanup = UVFSRequestCleanup) {
     uv_fs_req_cleanup(self.pointer)
   }
 
-  public func close(uv_fs_close: UVFSCloseOperation = UVFSClose, _ callback: ((FSRequest) -> Void)? = nil) -> Status {
+  public func close(uv_fs_close: FSClose = UVFSClose, _ callback: ((FSRequest) -> Void)? = nil) -> Status {
     let closeRequest = UnsafeMutablePointer<UVFSType>.alloc(sizeof(UVFSType))
 
     if let cb = callback {

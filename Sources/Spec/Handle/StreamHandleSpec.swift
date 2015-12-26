@@ -28,7 +28,7 @@ class StreamHandleSpec: Spec {
         it("yields the stream-handle pointer to the Listen function") {
           let streamHandle = StreamHandle(MockHandleType())
 
-          let listen: UVListenOperation = { streamHandlePointer, backlog, onConnection in
+          let listen: Listen = { streamHandlePointer, backlog, onConnection in
             expect(streamHandlePointer).to.equal(streamHandle.pointer)
             return 0
           }
@@ -39,7 +39,7 @@ class StreamHandleSpec: Spec {
         it("yields the max number of connections by default") {
           let streamHandle = StreamHandle(MockHandleType())
 
-          let listen: UVListenOperation = { streamHandlePointer, backlog, onConnection in
+          let listen: Listen = { streamHandlePointer, backlog, onConnection in
             expect(backlog).to.equal(Backlog.Max.amount)
             return 0
           }
@@ -51,7 +51,7 @@ class StreamHandleSpec: Spec {
           let streamHandle = StreamHandle(MockHandleType())
           let amount: Int32 = 10
 
-          let listen: UVListenOperation = { streamHandlePointer, backlog, onConnection in
+          let listen: Listen = { streamHandlePointer, backlog, onConnection in
             expect(backlog).to.equal(amount)
             return 0
           }
@@ -62,7 +62,7 @@ class StreamHandleSpec: Spec {
         it("executes the provided callback in the ConnectionCallback") {
           let streamHandle = StreamHandle(MockHandleType())
 
-          let listen: UVListenOperation = { streamHandlePointer, backlog, onConnection in
+          let listen: Listen = { streamHandlePointer, backlog, onConnection in
             onConnection(streamHandlePointer, 0)
             return 0
           }
@@ -79,7 +79,7 @@ class StreamHandleSpec: Spec {
         it("return .OK when listen is successful") {
           let streamHandle = StreamHandle(MockHandleType())
 
-          let listen: UVListenOperation = { streamHandlePointer, backlog, onConnection in
+          let listen: Listen = { streamHandlePointer, backlog, onConnection in
             onConnection(streamHandlePointer, 0)
             return 0
           }
@@ -91,7 +91,7 @@ class StreamHandleSpec: Spec {
           let streamHandle = StreamHandle(MockHandleType())
           let code: Int32 = -1
 
-          let listen: UVListenOperation = { streamHandlePointer, backlog, onConnection in
+          let listen: Listen = { streamHandlePointer, backlog, onConnection in
             onConnection(streamHandlePointer, 0)
             return code
           }
@@ -105,7 +105,7 @@ class StreamHandleSpec: Spec {
           let streamHandle = StreamHandle(MockHandleType())
           let connection = StreamHandle(MockHandleType())
 
-          let accept: UVAcceptOperation = { connectionPointer, streamHandlePointer in
+          let accept: Accept = { connectionPointer, streamHandlePointer in
             expect(connectionPointer).to.equal(connection.pointer)
             expect(streamHandlePointer).to.equal(streamHandle.pointer)
             return 0
@@ -118,7 +118,7 @@ class StreamHandleSpec: Spec {
           let streamHandle = StreamHandle(MockHandleType())
           let connection = StreamHandle(MockHandleType())
 
-          let accept: UVAcceptOperation = { connectionPointer, streamHandlePointer in
+          let accept: Accept = { connectionPointer, streamHandlePointer in
             return 0
           }
 
@@ -130,7 +130,7 @@ class StreamHandleSpec: Spec {
           let connection = StreamHandle(MockHandleType())
           let code: Int32 = -1
 
-          let accept: UVAcceptOperation = { connectionPointer, streamHandlePointer in
+          let accept: Accept = { connectionPointer, streamHandlePointer in
             return code
           }
 
@@ -142,7 +142,7 @@ class StreamHandleSpec: Spec {
         it("yields the stream-handle pointer to the Listen function") {
           let streamHandle = StreamHandle(MockHandleType())
 
-          let readStart: UVReadStartOperation = { streamHandlePointer, onAlloc, onRead in
+          let readStart: ReadStart = { streamHandlePointer, onAlloc, onRead in
             expect(streamHandlePointer).to.equal(streamHandle.pointer)
             return 0
           }
@@ -153,7 +153,7 @@ class StreamHandleSpec: Spec {
         it("executes the provided callback in the onRead function") {
           let streamHandle = StreamHandle(MockHandleType())
 
-          let readStart: UVReadStartOperation = { streamHandlePointer, onAlloc, onRead in
+          let readStart: ReadStart = { streamHandlePointer, onAlloc, onRead in
             onRead(streamHandlePointer, 0, UnsafeMutablePointer<UVBufferType>.alloc(sizeof(UVBufferType)))
             return 0
           }
@@ -171,7 +171,7 @@ class StreamHandleSpec: Spec {
         it("return .OK when read is successful") {
           let streamHandle = StreamHandle(MockHandleType())
 
-          let readStart: UVReadStartOperation = { _,_,_ in
+          let readStart: ReadStart = { _,_,_ in
             return 0
           }
 
@@ -182,7 +182,7 @@ class StreamHandleSpec: Spec {
           let streamHandle = StreamHandle(MockHandleType())
           let code: Int32 = -1
 
-          let readStart: UVReadStartOperation = { _,_,_ in
+          let readStart: ReadStart = { _,_,_ in
             return code
           }
 
@@ -194,7 +194,7 @@ class StreamHandleSpec: Spec {
         it("creates a handle from itself and executes close") {
           let streamHandle = StreamHandle(MockHandleType())
 
-          let callback: UVCloseOperation = { handlePointer, _ in
+          let callback: Close = { handlePointer, _ in
             expect(handlePointer).to.equal(Handle(streamHandle).pointer)
           }
 
@@ -204,7 +204,7 @@ class StreamHandleSpec: Spec {
         it("executes the provided callback in the Close function") {
           let streamHandle = StreamHandle(MockHandleType())
 
-          let callback: UVCloseOperation = { handlePointer, closeCallback in
+          let callback: Close = { handlePointer, closeCallback in
             closeCallback(handlePointer)
           }
 
