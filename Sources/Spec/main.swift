@@ -2,6 +2,7 @@ import Swiftest
 
 Swiftest.register([
     HandleSpec.self,
+    IdleHandleSpec.self,
     StreamHandleSpec.self,
     TCPHandleSpec.self,
     CastSpec.self,
