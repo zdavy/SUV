@@ -1,3 +1,5 @@
+import Glibc
+
 public class WriteRequest {
   public typealias Pointer = UnsafeMutablePointer<UVWriteType>
   public let pointer: Pointer
@@ -20,6 +22,6 @@ public class WriteRequest {
   }
 
   public func free() {
-    self.pointer.dealloc(sizeofValue(self.pointer))
+    Glibc.free(self.pointer)
   }
 }

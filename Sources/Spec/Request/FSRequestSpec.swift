@@ -31,7 +31,7 @@ class FSRequestSpec: Spec {
           let pointer = UnsafeMutablePointer<UVFSType>.alloc(sizeof(UVFSType))
           let request = FSRequest(pointer)
 
-          expect(request.result).to.equal(File(UVFile(pointer.memory.result)))
+          expect(request.result).to.equal(UVFile(pointer.memory.result))
         }
       }
 
@@ -43,7 +43,7 @@ class FSRequestSpec: Spec {
           let close: FSClose = { loop, closeRequest, file, _ in
             expect(closeRequest).notTo.equal(pointer)
             expect(loop).to.equal(request.loop.pointer)
-            expect(file).to.equal(request.result.ref)
+            expect(file).to.equal(request.result)
 
             return 0
           }

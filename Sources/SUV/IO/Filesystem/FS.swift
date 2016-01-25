@@ -9,7 +9,11 @@ public class FS {
     self.pointer = Pointer.alloc(sizeof(UVFSType))
   }
 
-  public func open(filepath: String, _ access: Access, _ mode: Mode, uv_fs_open: FSOpen = UVFSOpen, _ callback: (FSRequest) -> Void) -> Status {
+  public func open(uv_fs_open uv_fs_open: FSOpen = UVFSOpen, _ filepath: String, _ access: Access, _ mode: Mode) -> FileDescriptor {
+    return .File(uv_fs_open(loop.pointer, self.pointer, filepath, access.flag, mode.flag, nil))
+  }
+
+  public func open(uv_fs_open uv_fs_open: FSOpen = UVFSOpen, _ filepath: String, _ access: Access, _ mode: Mode, _ callback: (FSRequest) -> Void) -> Status {
     pointer.memory.data = Cast.toVoid(callback)
 
     return Status(uv_fs_open(loop.pointer, self.pointer, filepath, access.flag, mode.flag) { request in
@@ -18,12 +22,12 @@ public class FS {
     })
   }
 
-  public func read(file: File, _ buffer: Buffer, _ size: Int, uv_fs_read: FSRead = UVFSRead, offset: Int = -1, _ callback: (FSRequest) -> Void) -> Status {
+  public func read(input: FileDescriptor, _ buffer: Buffer, _ size: Int, uv_fs_read: FSRead = UVFSRead, offset: Int = -1, _ callback: (FSRequest) -> Void) -> Status {
     pointer.memory.data = Cast.toVoid(callback)
 
     buffer.pointer.memory.len = size
 
-    return Status(uv_fs_read(loop.pointer, self.pointer, file.ref, buffer.pointer, UInt32(size), Int64(offset)) { request in
+    return Status(uv_fs_read(loop.pointer, self.pointer, UVFile(input), buffer.pointer, UInt32(size), Int64(offset)) { request in
       let callback: (FSRequest) -> Void = Cast.fromVoid(request.memory.data)!
       callback(FSRequest(request))
     })
@@ -34,7 +38,7 @@ public class FS {
 
     buffer.pointer.memory.len = size
 
-    return Status(uv_fs_write(loop.pointer, self.pointer, output.flag, buffer.pointer, UInt32(size), Int64(offset)) { request in
+    return Status(uv_fs_write(loop.pointer, self.pointer, UVFile(output), buffer.pointer, UInt32(size), Int64(offset)) { request in
       let callback: (FSRequest) -> Void = Cast.fromVoid(request.memory.data)!
       callback(FSRequest(request))
     })

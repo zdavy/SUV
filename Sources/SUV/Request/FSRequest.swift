@@ -4,8 +4,8 @@ public class FSRequest {
   public let pointer: Pointer
   public let loop: Loop
 
-  public var result: File {
-    return File(UVFile(pointer.memory.result))
+  public var result: UVFile {
+    return UVFile(pointer.memory.result)
   }
 
   public init(_ pointer: Pointer) {
@@ -23,12 +23,12 @@ public class FSRequest {
     if let cb = callback {
       closeRequest.memory.data = Cast.toVoid(cb)
 
-      return Status(uv_fs_close(loop.pointer, closeRequest, result.ref) { request in
+      return Status(uv_fs_close(loop.pointer, closeRequest, result) { request in
         let callback: (FSRequest) -> Void = Cast.fromVoid(request.memory.data)!
         callback(FSRequest(request))
       })
     } else {
-      return Status(uv_fs_close(loop.pointer, closeRequest, result.ref, nil))
+      return Status(uv_fs_close(loop.pointer, closeRequest, result, nil))
     }
   }
 }

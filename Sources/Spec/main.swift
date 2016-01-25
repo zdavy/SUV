@@ -17,8 +17,6 @@ Swiftest.register([
     INetSpec.self,
     StatusSpec.self,
     BufferSpec.self,
-    FileSpec.self,
-    FileEquatableSpec.self,
     HandleEquatableSpec.self,
     StatusEquatableSpec.self,
     LoopEquatableSpec.self

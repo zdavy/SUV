@@ -32,7 +32,7 @@ public class StreamHandle: HandleType {
 
     return Status(uv_read_start(self.pointer, alloc.callback) { client, size, buffer in
       let callback: (StreamHandle, Int, Buffer) -> Void = Cast.fromVoid(client.memory.data)!
-      callback(StreamHandle(client), size, Buffer(buffer, size))
+      callback(StreamHandle(client), size, Buffer(buffer, buffer.memory.len))
     })
   }
 

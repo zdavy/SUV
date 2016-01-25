@@ -19,4 +19,8 @@ public class Loop {
   public func run(runMode: RunMode, uv_run: Run = UVRun) -> Status {
     return Status(uv_run(self.pointer, runMode.value))
   }
+
+  public func close(uv_loop_close: LoopClose = UVLoopClose) {
+    uv_loop_close(self.pointer)
+  }
 }
